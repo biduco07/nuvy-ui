@@ -24,7 +24,7 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 
    O `tw-animate-css` é importado pelo preset da spartan e precisa estar instalado.
 
-3. **`components.json`** na raiz do projeto: o estilo **precisa** ser `vega`, porque o padrão do CLI é `nova`. O CLI usa esse arquivo também para saber onde copiar os componentes e qual alias de import usar. Depois gere os componentes com `ng g @spartan-ng/cli:ui`.
+3. **`components.json`** na raiz do projeto: o estilo é `vega`. Ele já é o padrão do `components.json` no CLI 1.8, mas deixe escrito, porque o `init` interativo pergunta e oferece outros. Campos aceitos num projeto Angular CLI: `style`, `componentsPath` (padrão `libs/ui`) e `importAlias` (padrão `@spartan-ng/helm`). O CLI usa esse arquivo também para saber onde copiar os componentes e qual alias de import usar. Depois gere os componentes com `ng g @spartan-ng/cli:ui`.
 
    ```json
    {

@@ -45,7 +45,7 @@ O login compartilhado (Keycloak, repositório nuvy-auth) vai se alinhar a este t
   - Tailwind 4 ou mais novo;
   - `@angular/cdk`;
   - `tw-animate-css`, que o preset importa e precisa estar instalado.
-- **Estilo vega.** A spartan 1.8 tem estilos prontos (nova, vega, lyra, maia, mira, luma). O estilo vai no `components.json` e é gravado no código dos componentes na hora da geração. A escolha é `"style": "vega"`, os cantos padrão: botões e campos `rounded-md` (8 px), cartões e janelas `rounded-xl` (14 px), etiquetas em pílula. Atenção: o padrão do CLI é `nova`, então o `vega` precisa ser escrito no `components.json` de cada projeto.
+- **Estilo vega.** A spartan 1.8 tem estilos prontos (nova, vega, lyra, maia, mira, luma). O estilo vai no `components.json` e é gravado no código dos componentes na hora da geração. A escolha é `"style": "vega"`, os cantos padrão: botões e campos `rounded-md` (8 px), cartões e janelas `rounded-xl` (14 px), etiquetas em pílula. O `vega` já é o padrão do `components.json` no CLI 1.8; mesmo assim, fica escrito em cada projeto.
 - `--radius: 0.625rem`, o padrão da spartan.
 - **Neutros**: a base "slate" da spartan, com os ajustes de contraste da seção 2.
 - **Preset**: o `@spartan-ng/brain/hlm-tailwind-preset.css` já liga as variáveis padrão ao Tailwind (`bg-primary` etc.) e define `@custom-variant dark (&:is(.dark *))`. O tema só acrescenta o que falta.
