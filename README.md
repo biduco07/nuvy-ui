@@ -23,6 +23,6 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 - `dist/nuvytech/tokens.css`: só as variáveis, com o claro no `:root` e o escuro em `.dark`.
 - `dist/nuvytech/tokens-escuro.css`: só o escuro, para páginas sem JavaScript (portal, Keycloak).
 - `dist/tokens.json`: todos os valores em OKLCH e hex.
-- `modelos/`: o script do modo escuro (`nuvy-tema.js`), o serviço Angular do botão de tema e o preparo dos testes Vitest (`test-setup.ts`).
+- `modelos/`: o script do modo escuro (`nuvy-tema.js`), o serviço Angular do botão de tema e o preparo dos testes Vitest (`preparo-testes.ts`, copiado como `src/test-setup.ts`).
 
 O passo a passo para cada tipo de projeto está em [docs/como-usar.md](docs/como-usar.md).

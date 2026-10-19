@@ -83,7 +83,7 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 
    **Bundle inicial:** qualquer import de `@spartan-ng/helm/utils` puxa o `@angular/cdk/overlay` (≈46 kB), e o `hlm()` traz o `tailwind-merge` (≈36 kB). No piloto, o bundle inicial foi de 422 kB para 617 kB, acima do orçamento de 500 kB. Voltou para 435 kB com duas mudanças: o toaster no `@defer` e, no cabeçalho, o botão de tema com as classes do `hlmBtn` ghost/icon copiadas, sem a diretiva.
 
-   **Testes com Vitest + jsdom:** o jsdom não tem `matchMedia`, que o sonner usa. Copie `modelos/test-setup.ts` para `src/test-setup.ts` e ligue no `angular.json` (`test.options.setupFiles`) e no `tsconfig.spec.json`.
+   **Testes com Vitest + jsdom:** o jsdom não tem `matchMedia`, que o sonner usa. Copie `modelos/preparo-testes.ts` para `src/test-setup.ts` e ligue no `angular.json` (`test.options.setupFiles`) e no `tsconfig.spec.json`.
 
    **Diálogo:**
    - Abra com `HlmDialogService.open(Comp, { context, contentClass: 'sm:max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto', closeLabel: 'Fechar' })`. Sem o `overflow-y-auto`, o botão de enviar fica fora da tela no celular. O `closeLabel` padrão é "Close".
