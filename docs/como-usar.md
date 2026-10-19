@@ -32,6 +32,8 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    }
    ```
 
+   **Atenção:** se você rodar o `ng g @spartan-ng/cli:init` (ou o `ui-theme`), ele grava no fim do `styles.css` um bloco `:root { … }`, um `:root.dark { … }` e um `@layer base` com as cores e o foco padrão da spartan. Esse bloco vem depois do import do tema e **passa por cima dele sem dar erro**. Apague o bloco. O `npm run copiar` avisa quando encontra um.
+
 4. **Copie o tema** a partir do nuvy-ui. O comando grava `src/styles/nuvy-tema.css`:
 
    ```bash

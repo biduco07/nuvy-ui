@@ -71,9 +71,9 @@ O tema acrescenta:
 | `--card` | #0f172b | #ffffff |
 | `--primary` / `--primary-foreground` (botão) | #51a2f8 / #061431 | #0062cc / #f9fafb |
 | `--ring` (foco) | #3f93f7 | #007bff |
-| `--muted` / `--muted-foreground` | #1d293d / #98a9c1 | #f1f5f9 / #4f5f76 |
+| `--muted` / `--muted-foreground` | #1d293d / #aebfd8 | #f1f5f9 / #4f5f76 |
 | `--accent` / `--accent-foreground` (menu ativo) | #192e4b / #dbe9fc | #ebf3ff / #014491 |
-| `--input` (borda de campo) | #66768c | #7f8da2 |
+| `--input` (borda de campo) | #718198 | #7f8da2 |
 | `--destructive` | #fe9b98 | #b91c1c |
 | `--success` / `--warning` / `--info` | #5dd786 / #fdbe45 / #59c5f5 | #197037 / #925002 / #076484 |
 
@@ -109,10 +109,10 @@ O estilo vega usa `hover:bg-primary/80` no botão principal e no badge que é li
 
 ### 5. Conferência de contraste
 
-- Um script do nuvy-ui calcula 69 combinações por modo. Elas saem das classes do estilo vega em `style-vega.css` do `@spartan-ng/cli` 1.8.0, que foi lido.
+- Um script do nuvy-ui calcula 73 combinações no escuro e 69 no claro (o escuro tem dois estados a mais: placeholder do select com o mouse e switch desligado). Elas saem das classes do estilo vega em `style-vega.css` do `@spartan-ng/cli` 1.8.0, que foi lido.
 - Entram texto sobre fundo, sobre cartão, sobre `muted` e sobre o fundo translúcido dos campos e badges de status; botão em repouso e com o mouse em cima; bordas de campo; foco; gráficos.
 - O script compõe as transparências como o navegador.
-- Na proposta, as 138 combinações (escuro e claro) passam.
+- As 142 combinações passam (depois da revisão do código, que achou os dois estados do escuro e ajustou `--muted-foreground` e `--input` do escuro).
 - O script roda no CI do nuvy-ui e falha se alguma cair abaixo do mínimo.
 - **A conferência final é no piloto**, sobre os componentes reais renderizados: axe e Lighthouse nas telas, mais um teste do botão com o mouse em cima, que lê a cor calculada. Se algum valor real divergir da lista, ajusta-se a lista e o token no nuvy-ui antes do segundo projeto.
 

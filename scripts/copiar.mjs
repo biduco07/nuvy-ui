@@ -18,7 +18,19 @@ export function copiar(pastaProjeto, opcoes = {}) {
   const versaoAntiga = existsSync(destino) ? versaoDe(readFileSync(destino, 'utf8')) : null;
   mkdirSync(dirname(destino), { recursive: true });
   writeFileSync(destino, tema);
-  return { destino, versaoAntiga, versaoNova: versaoDe(tema) };
+  return { destino, versaoAntiga, versaoNova: versaoDe(tema), avisos: avisosDoProjeto(projeto) };
+}
+
+// O setup padrão da spartan (ng g @spartan-ng/cli:init / ui-theme) grava no styles.css um :root e um
+// :root.dark com as cores dela, que vêm depois do import do tema e passam por cima dele sem erro.
+function avisosDoProjeto(projeto) {
+  const estilos = join(projeto, 'src', 'styles.css');
+  if (!existsSync(estilos)) return [];
+  const texto = readFileSync(estilos, 'utf8');
+  if (/--(background|primary|radius)\s*:/.test(texto)) {
+    return [`${estilos} define cores ou raio próprios (ex.: o bloco que o "spartan-ng/cli:init" grava). Apague esse bloco: as cores vêm de nuvy-tema.css.`];
+  }
+  return [];
 }
 
 if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1])) {
@@ -31,6 +43,7 @@ if (process.argv[1] && fileURLToPath(import.meta.url) === resolve(process.argv[1
     const r = copiar(pasta, { destino });
     const antes = r.versaoAntiga ? `estava na ${r.versaoAntiga}` : 'primeira cópia';
     console.log(`Tema ${r.versaoNova} copiado para ${r.destino} (${antes}).`);
+    for (const aviso of r.avisos) console.warn(`Atenção: ${aviso}`);
   } catch (erro) {
     console.error(erro.message);
     process.exit(1);

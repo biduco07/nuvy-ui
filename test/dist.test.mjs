@@ -25,7 +25,7 @@ test('tema.css traz a regra do hover, o contorno cheio e a versão', () => {
 
 test('tokens-escuro.css é só escuro, direto no :root', () => {
   const css = ler('nuvytech/tokens-escuro.css');
-  assert.match(css, /color-scheme: dark/);
+  assert.match(css, /^\s*color-scheme: dark;/m);
   assert.doesNotMatch(css, /\.dark \{/);
 });
 

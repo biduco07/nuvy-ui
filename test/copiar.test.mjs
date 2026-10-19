@@ -44,3 +44,19 @@ test('recusa pasta que não é projeto e não cria nada nela', () => {
   assert.throws(() => copiar(pasta), /package\.json/);
   assert.equal(existsSync(join(pasta, 'src')), false);
 });
+
+test('avisa quando o styles.css do projeto redefine as cores (setup padrão da spartan)', () => {
+  const pasta = projeto();
+  mkdirSync(join(pasta, 'src'), { recursive: true });
+  writeFileSync(join(pasta, 'src', 'styles.css'), "@import './styles/nuvy-tema.css';\n:root {\n  --radius: 0.625rem;\n  --background: oklch(1 0 0);\n}\n:root.dark {\n  --background: oklch(0.129 0.042 264.695);\n}\n");
+  const r = copiar(pasta);
+  assert.equal(r.avisos.length, 1);
+  assert.match(r.avisos[0], /styles\.css/);
+});
+
+test('não avisa quando o styles.css só importa o tema', () => {
+  const pasta = projeto();
+  mkdirSync(join(pasta, 'src'), { recursive: true });
+  writeFileSync(join(pasta, 'src', 'styles.css'), "@import './styles/nuvy-tema.css';\n");
+  assert.deepEqual(copiar(pasta).avisos, []);
+});

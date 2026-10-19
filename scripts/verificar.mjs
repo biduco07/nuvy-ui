@@ -53,6 +53,12 @@ export function pares(t, modo) {
   txt('secondary-foreground / secondary/80 sobre background', c('secondary-foreground'), sobre(c('secondary'), 0.8, bg));
   txt('accent-foreground / accent', c('accent-foreground'), c('accent'));
   txt('muted-foreground / muted (ghost hover)', c('muted-foreground'), c('muted'));
+  // Só no escuro o vega usa dark:hover:bg-input/50 no select e dark:data-unchecked:bg-input/80 no switch;
+  // no claro o switch desligado é o --input cheio (já conferido em "input (borda)").
+  if (modo === 'escuro') for (const [n, f] of [['background', bg], ['card', card]]) {
+    txt(`muted-foreground / input/50 sobre ${n} (placeholder do select com o mouse)`, c('muted-foreground'), sobre(c('input'), 0.5, f));
+    ui(`input/80 (switch desligado) / ${n}`, sobre(c('input'), 0.8, f), f);
+  }
   txt('muted-foreground / muted/50 sobre background', c('muted-foreground'), sobre(c('muted'), 0.5, bg));
   txt('foreground / muted (linha selecionada)', c('foreground'), c('muted'));
   txt('destructive-foreground / destructive', c('destructive-foreground'), c('destructive'));

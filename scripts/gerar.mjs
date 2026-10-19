@@ -36,7 +36,8 @@ export function completo(marca, modo) {
   };
 }
 function bloco(seletor, t, extra = {}) {
-  const linhas = Object.entries(extra).map(([k, v]) => `  --${k}: ${v};`);
+  // color-scheme é propriedade de verdade (liga o escuro dos controles nativos); o resto vira variável.
+  const linhas = Object.entries(extra).map(([k, v]) => (k === 'color-scheme' ? `  color-scheme: ${v};` : `  --${k}: ${v};`));
   for (const k of ORDEM) {
     const v = t[k];
     const h = hex(v);
