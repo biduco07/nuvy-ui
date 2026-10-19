@@ -138,3 +138,13 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 5. Abra um PR. Depois, rode `npm run copiar` em cada projeto, que abre o próprio PR.
 
 Para ver as cores, rode `npm run previa` e abra `previa/tema-nuvytech.html`.
+
+## Dicas dos projetos já migrados
+
+Vêm do ProjetoDesaparecidos e do iddle-app. Os detalhes estão em `side-session-notes/.../migracao-ui/aprendizados-piloto.md`.
+
+- **Barras e gráficos com texto por cima:** varie só a matiz e deixe a luminosidade fixa por tema. O iddle-app usa `oklch(0.60 0.12 H)` no claro e `oklch(0.53 0.10 H)` no escuro. Se a luminosidade variar, o texto que fica metade sobre a barra e metade sobre o trilho deixa de passar 4,5:1.
+- **Barras de dados neutras:** use `bg-input`, que tem 3:1 contra o fundo. `bg-muted` some no escuro.
+- **Nome acessível:** o Angular tira o espaço entre elementos ("Alfa" + "×2" vira "Alfa×2"). Quando o texto visível precisa entrar no nome acessível (WCAG 2.5.3), use `&ngsp;`.
+- **Botão que fica desabilitado durante a navegação por teclado:** use `aria-disabled="true"` e barre o clique no handler. Com `disabled`, o foco cai no `<body>`. A aparência de desabilitado vem do tema a partir da 1.1.0.
+- **O que o axe acusa e é da biblioteca:** o `<ol>` do `brn-sonner-toaster` dá violação `list` enquanto um aviso está na tela, e o `hlmAlert` tem `role="alert"` fixo. Liste isso à parte, sem esconder.

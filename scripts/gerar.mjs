@@ -6,7 +6,7 @@ import { rgbParaHex, rgbParaOklch } from './cor.mjs';
 import { comum, marcas, graficos, forma } from '../tokens.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.0.0';
+const VERSAO = '1.1.0';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {
@@ -82,6 +82,17 @@ const TAILWIND = `@theme inline {
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+  /* O preflight do Tailwind v4 deixa a seta nos botões; volta a mão. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  /* A spartan só estiliza o botão desabilitado por data-disabled. Botões que usam aria-disabled
+     (para não perder o foco do teclado) ficam com a mesma aparência; o clique é barrado no handler. */
+  [data-slot='button'][aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 `;

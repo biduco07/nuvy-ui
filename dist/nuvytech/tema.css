@@ -1,4 +1,4 @@
-/* nuvy-ui 1.0.0 — tema NuvyTech, marca "nuvytech". Arquivo gerado: não edite aqui.
+/* nuvy-ui 1.1.0 — tema NuvyTech, marca "nuvytech". Arquivo gerado: não edite aqui.
    Para mudar, edite tokens.mjs no nuvy-ui, rode "npm run gerar" e copie de novo. */
 
 :root {
@@ -113,6 +113,17 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased;
+  }
+  /* O preflight do Tailwind v4 deixa a seta nos botões; volta a mão. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  /* A spartan só estiliza o botão desabilitado por data-disabled. Botões que usam aria-disabled
+     (para não perder o foco do teclado) ficam com a mesma aparência; o clique é barrado no handler. */
+  [data-slot='button'][aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
   }
 }
 
