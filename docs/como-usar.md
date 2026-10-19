@@ -15,22 +15,31 @@ Cada projeto recebe uma **cópia** do arquivo gerado. O build não busca nada da
 Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuvydoc.
 
 1. **Requisitos:** Angular 21 ou 22, Tailwind 4 (com `@tailwindcss/postcss`) e `@angular/cdk`.
-2. **Dependências:**
+2. **Dependências**, com as versões que funcionaram no piloto (ProjetoDesaparecidos, 19/10/2026):
 
    ```bash
-   npm i @spartan-ng/brain @angular/cdk @fontsource-variable/inter @ng-icons/core @ng-icons/lucide class-variance-authority clsx tailwind-merge tw-animate-css
-   npm i -D @spartan-ng/cli
+   npm i @spartan-ng/brain@1.8.0 @angular/cdk @fontsource-variable/inter @ng-icons/core@^33.4.0 @ng-icons/lucide@^33.4.0 class-variance-authority clsx tailwind-merge tw-animate-css
    ```
 
-   O `tw-animate-css` é importado pelo preset da spartan e precisa estar instalado.
+   - O `@spartan-ng/brain` fica **exato** em `1.8.0`, porque os componentes helm copiados são dessa versão.
+   - O `@ng-icons` fica na **33**. Sem versão, o npm instala a 36, fora da faixa `>=32 <34` que a spartan 1.8 declara.
+   - O `tw-animate-css` é importado pelo preset da spartan e precisa estar instalado.
+   - **O CLI não entra no `package.json`**, porque traz o Nx inteiro. Use `npm i --no-save @spartan-ng/cli@1.8.0` só na hora de gerar componentes.
 
-3. **`components.json`** na raiz do projeto: o estilo é `vega`. Ele já é o padrão do `components.json` no CLI 1.8, mas deixe escrito, porque o `init` interativo pergunta e oferece outros. Campos aceitos num projeto Angular CLI: `style`, `componentsPath` (padrão `libs/ui`) e `importAlias` (padrão `@spartan-ng/helm`). O CLI usa esse arquivo também para saber onde copiar os componentes e qual alias de import usar. Depois gere os componentes com `ng g @spartan-ng/cli:ui`.
+3. **`components.json`** na raiz do projeto, escrito à mão:
 
    ```json
    {
-     "style": "vega"
+     "style": "vega",
+     "componentsPath": "libs/ui",
+     "importAlias": "@spartan-ng/helm"
    }
    ```
+
+   - O `vega` já é o padrão no CLI 1.8, mas fica escrito.
+   - Com esse arquivo presente, `npx ng g @spartan-ng/cli:ui <nome> < /dev/null` (um componente por vez) não pergunta nada. As dependências entre componentes entram sozinhas.
+   - O CLI grava `paths` no `tsconfig.json` e `libs/ui/**/src/**/*.ts` no `include` do `tsconfig.app.json`, e cria `.nx/`. Ponha `/.nx` no `.gitignore`.
+   - O CLI reescreve os JSON e tira os comentários do topo dos tsconfig.
 
    **Atenção:** se você rodar o `ng g @spartan-ng/cli:init` (ou o `ui-theme`), ele grava no fim do `styles.css` um bloco `:root { … }`, um `:root.dark { … }` e um `@layer base` com as cores e o foco padrão da spartan. Esse bloco vem depois do import do tema e **passa por cima dele sem dar erro**. Apague o bloco. O `npm run copiar` avisa quando encontra um.
 
@@ -46,13 +55,15 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    @layer theme, base, components, utilities;
    @import 'tailwindcss/theme.css' layer(theme);
    @import 'tailwindcss/preflight.css' layer(base);
-   @import 'tailwindcss/utilities.css' layer(utilities);
+   @import 'tailwindcss/utilities.css' layer(utilities) source(none);
+   @source './';
+   @source '../libs/ui';
    @import '@spartan-ng/brain/hlm-tailwind-preset.css';
    @import '@fontsource-variable/inter';
    @import './styles/nuvy-tema.css';
    ```
 
-   Se os componentes helm ficarem fora de `src/`, acrescente `@source '../caminho/dos/helm';` para o Tailwind enxergar as classes deles.
+   O `source(none)` com os dois `@source` faz o Tailwind ler só o código do app e os componentes helm. Sem isso, a varredura automática pega pastas de build versionadas (como o `docs/` do GitHub Pages) e qualquer outra coisa da raiz.
 
 6. **Modo escuro**:
 
@@ -64,8 +75,21 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 
 7. **Ícones e avisos**:
 
-   - Ícones Lucide pelo `@ng-icons/lucide` (`<ng-icon hlm name="lucideX" />`), no lugar de PrimeIcons e Material Icons.
+   - Ícones Lucide pelo `@ng-icons/lucide`, no lugar de PrimeIcons e Material Icons. Na spartan 1.8 não existe mais o helm `icon`: use `NgIcon` com `provideIcons({ lucideX })` e `<ng-icon name="lucideX" />`. O tamanho vem das classes `[&_ng-icon]` do componente pai (botão, alerta etc.).
    - Avisos rápidos com o `sonner` da spartan: `<hlm-toaster />` no componente raiz e `toast(...)` nas chamadas.
+     - Ponha o toaster dentro de `@defer (on idle) { <hlm-toaster /> }` e importe a classe `HlmToaster` **direto**, sem o array `HlmToasterImports`. O `@defer` só adia componentes importados direto na classe; com o array, o código continua no bundle inicial.
+     - Nos testes, injete o `toast` por um `InjectionToken` com `factory: () => toast` e troque no TestBed. O `vi.mock` não funciona com o `@angular/build:unit-test`.
+     - Os textos do sonner ("Notifications alt+T", "Close toast") vêm em inglês, e a 1.8 não deixa trocar.
+
+   **Bundle inicial:** qualquer import de `@spartan-ng/helm/utils` puxa o `@angular/cdk/overlay` (≈46 kB), e o `hlm()` traz o `tailwind-merge` (≈36 kB). No piloto, o bundle inicial foi de 422 kB para 617 kB, acima do orçamento de 500 kB. Voltou para 435 kB com duas mudanças: o toaster no `@defer` e, no cabeçalho, o botão de tema com as classes do `hlmBtn` ghost/icon copiadas, sem a diretiva.
+
+   **Testes com Vitest + jsdom:** o jsdom não tem `matchMedia`, que o sonner usa. Copie `modelos/test-setup.ts` para `src/test-setup.ts` e ligue no `angular.json` (`test.options.setupFiles`) e no `tsconfig.spec.json`.
+
+   **Diálogo:**
+   - Abra com `HlmDialogService.open(Comp, { context, contentClass: 'sm:max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto', closeLabel: 'Fechar' })`. Sem o `overflow-y-auto`, o botão de enviar fica fora da tela no celular. O `closeLabel` padrão é "Close".
+   - No componente aberto, use `injectBrnDialogContext<T>()` e `inject(BrnDialogRef)`, com `host: { class: 'flex flex-col gap-6' }`.
+
+   **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`.
 
 8. **O que o tema já resolve**:
 
