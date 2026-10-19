@@ -100,6 +100,7 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    **Diálogo:**
    - Abra com `HlmDialogService.open(Comp, { context, contentClass: 'sm:max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto', closeLabel: 'Fechar' })`. Sem o `overflow-y-auto`, o botão de enviar fica fora da tela no celular. O `closeLabel` padrão é "Close".
    - No componente aberto, use `injectBrnDialogContext<T>()` e `inject(BrnDialogRef)`, com `host: { class: 'flex flex-col gap-6' }`.
+   - **Aviso atrás do diálogo:** no CDK 21+, o diálogo abre na camada do topo do navegador (popover), e o toast do sonner fica atrás do fundo escuro. O piloto resolveu com um serviço de diálogo local configurado com `usePopover: false`. Prover o `provideSpartanHlm()` na raiz também resolve, mas custa ≈46 kB no bundle inicial. Use também `closeOnOutsidePointerEvents: false` se houver aviso com botão "Fechar" na tela: sem isso, fechar o aviso fecha o formulário.
 
    **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`. O `hlm-field-error` tem `role="alert"`. Se o foco for para o campo com erro, o leitor de tela lê a mensagem duas vezes: pelo alerta e pelo `aria-describedby`. É aceitável, mas não acrescente mais um `aria-live` por cima.
 
