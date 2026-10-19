@@ -91,6 +91,7 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
      - Ponha o toaster dentro de `@defer (on idle) { <hlm-toaster /> }` e importe a classe `HlmToaster` **direto**, sem o array `HlmToasterImports`. O `@defer` só adia componentes importados direto na classe; com o array, o código continua no bundle inicial.
      - Nos testes, injete o `toast` por um `InjectionToken` com `factory: () => toast` e troque no TestBed. O `vi.mock` não funciona com o `@angular/build:unit-test`.
      - Os textos do sonner ("Notifications alt+T", "Close toast") vêm em inglês, e a 1.8 não deixa trocar.
+     - **Leitor de tela:** o sonner cria a região do aviso já com o texto, no primeiro aviso (e dentro do `@defer`). Vários leitores não anunciam uma região que já nasce com conteúdo. Na fachada de avisos, anuncie também pelo `LiveAnnouncer` do `@angular/cdk/a11y` (`'polite'` para sucesso e informação, `'assertive'` para erro), só no navegador.
 
    **Bundle inicial:** qualquer import de `@spartan-ng/helm/utils` puxa o `@angular/cdk/overlay` (≈46 kB), e o `hlm()` traz o `tailwind-merge` (≈36 kB). No piloto, o bundle inicial foi de 422 kB para 617 kB, acima do orçamento de 500 kB. Voltou para 435 kB com duas mudanças: o toaster no `@defer` e, no cabeçalho, o botão de tema com as classes do `hlmBtn` ghost/icon copiadas, sem a diretiva.
 
