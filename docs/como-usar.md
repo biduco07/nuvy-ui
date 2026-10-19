@@ -57,13 +57,15 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    @import 'tailwindcss/preflight.css' layer(base);
    @import 'tailwindcss/utilities.css' layer(utilities) source(none);
    @source './';
+   @source not './testing';
+   @source not './**/*.spec.ts';
    @source '../libs/ui';
    @import '@spartan-ng/brain/hlm-tailwind-preset.css';
    @import '@fontsource-variable/inter';
    @import './styles/nuvy-tema.css';
    ```
 
-   O `source(none)` com os dois `@source` faz o Tailwind ler só o código do app e os componentes helm. Sem isso, a varredura automática pega pastas de build versionadas (como o `docs/` do GitHub Pages) e qualquer outra coisa da raiz.
+   O `source(none)` com os `@source` faz o Tailwind ler só o código do app e os componentes helm, sem os testes. Se os specs ou utilitários de teste entrassem na varredura, um comentário como `bg-green-700` iria parar no CSS de produção. Sem isso, a varredura automática pega pastas de build versionadas (como o `docs/` do GitHub Pages) e qualquer outra coisa da raiz.
 
 6. **Modo escuro**:
 
@@ -72,6 +74,15 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    - Copie `modelos/tema.service.ts` e ligue o botão do cabeçalho a `tema.alternar()`. O ícone vem de `tema.modo()`: sol no escuro, lua no claro.
    - Remova qualquer classe de tema fixa no `index.html` (`class="dark"`, `.app-dark` e afins).
    - **CSP:** o script é um arquivo do próprio site, então basta `script-src 'self'`. Não precisa de hash.
+   - **Cache:** o `nuvy-tema.js` não tem hash no nome. Se o servidor usar cache longo para `.js` (por exemplo `max-age=31536000, immutable`), quem visitou uma vez fica com a versão velha por um ano, e não há como consertar depois. No nginx, dê a ele uma regra própria, **antes** da regra de `.js`:
+
+     ```nginx
+     location = /nuvy-tema.js {
+       add_header Cache-Control "no-cache";
+       # repita aqui os add_header de segurança do servidor: um add_header dentro do location apaga os de fora
+       try_files $uri =404;
+     }
+     ```
 
 7. **Ícones e avisos**:
 
@@ -89,7 +100,9 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    - Abra com `HlmDialogService.open(Comp, { context, contentClass: 'sm:max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto', closeLabel: 'Fechar' })`. Sem o `overflow-y-auto`, o botão de enviar fica fora da tela no celular. O `closeLabel` padrão é "Close".
    - No componente aberto, use `injectBrnDialogContext<T>()` e `inject(BrnDialogRef)`, com `host: { class: 'flex flex-col gap-6' }`.
 
-   **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`.
+   **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`. O `hlm-field-error` tem `role="alert"`. Se o foco for para o campo com erro, o leitor de tela lê a mensagem duas vezes: pelo alerta e pelo `aria-describedby`. É aceitável, mas não acrescente mais um `aria-live` por cima.
+
+   **Orçamento do bundle:** ponha o `maximumError` do bundle inicial perto do limite real (por exemplo 550 kB), e não em 1 MB. Assim, um import que puxe o overlay do CDK de volta quebra o build, em vez de passar em silêncio.
 
 8. **O que o tema já resolve**:
 
