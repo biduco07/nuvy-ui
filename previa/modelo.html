@@ -1,0 +1,396 @@
+<title>Tema NuvyTech</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: uma faixa de controles, depois uma tela de app de exemplo e as referências (cores, contraste, decisões).
+   As cores abaixo são os tokens do próprio tema, gerados pelo nuvy-ui. */
+/*VARS*/
+:root {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  /* Estilo "vega" da spartan (cantos padrão): rounded-md = 0,8 × raio, rounded-xl = 1,4 × raio */
+  --r-btn: calc(var(--radius) * 0.8); --r-input: calc(var(--radius) * 0.8); --r-card: calc(var(--radius) * 1.4);
+  --r-dialog: calc(var(--radius) * 1.4); --r-tabs: var(--radius); --r-tab: calc(var(--radius) * 0.8);
+  --r-alert: var(--radius); --r-menu: calc(var(--radius) * 0.8); --r-check: 4px;
+  --hairline: color-mix(in oklab, var(--foreground) 10%, transparent);
+  /* No escuro, campo e botão de contorno têm fundo do --input a 30%; no claro, fundo da página. */
+  --campo-fundo: color-mix(in oklab, var(--input) 30%, transparent);
+  --contorno-fundo: color-mix(in oklab, var(--input) 30%, transparent);
+  --contorno-borda: var(--input);
+  --contorno-hover: color-mix(in oklab, var(--input) 50%, transparent);
+  --fantasma-hover: color-mix(in oklab, var(--muted) 50%, transparent);
+  --perigo-fundo: color-mix(in oklab, var(--destructive) 20%, transparent);
+  --perigo-hover: color-mix(in oklab, var(--destructive) 30%, transparent);
+}
+:root[data-theme="light"] {
+  --campo-fundo: transparent;
+  --contorno-fundo: var(--background);
+  --contorno-borda: var(--border);
+  --contorno-hover: var(--muted);
+  --fantasma-hover: var(--muted);
+  --perigo-fundo: color-mix(in oklab, var(--destructive) 10%, transparent);
+  --perigo-hover: color-mix(in oklab, var(--destructive) 20%, transparent);
+}
+* { box-sizing: border-box; }
+html { font-family: var(--font-sans); }
+body {
+  margin: 0; background: var(--background); color: var(--foreground);
+  font: 14px/1.5 var(--font-sans); -webkit-font-smoothing: antialiased;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.pagina { max-width: 1180px; margin: 0 auto; display: grid; gap: 40px; }
+h1, h2, h3 { margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: 20px; font-weight: 600; }
+p { margin: 0; }
+.sub { color: var(--muted-foreground); }
+.rotulo { font-size: 12px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted-foreground); }
+
+/* Faixa de controles */
+.topo { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: color-mix(in oklab, var(--background) 92%, transparent);
+  backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))); }
+.topo-dentro { max-width: 1180px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between;
+  padding: 12px max(16px, env(safe-area-inset-right, 0px)) 12px max(16px, env(safe-area-inset-left, 0px)); }
+.marca-titulo { display: flex; align-items: center; gap: 10px; }
+.marca-titulo h1 { font-size: 17px; font-weight: 700; }
+.marca-titulo .versao { font: 12px var(--font-mono); color: var(--muted-foreground); }
+.controles { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; }
+.grupo { display: flex; align-items: center; gap: 8px; }
+.segmentado { display: inline-flex; background: var(--muted); border-radius: var(--r-tabs); padding: 3px; gap: 2px; }
+.segmentado button { border: 0; background: transparent; color: var(--muted-foreground); font: 500 13px var(--font-sans);
+  padding: 4px 10px; border-radius: var(--r-tab); cursor: pointer; }
+.segmentado button[aria-pressed="true"] { background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 12%, transparent); }
+.segmentado button:focus-visible, .btn:focus-visible, .campo:focus-visible, .aba:focus-visible, .menu a:focus-visible, .chk:focus-visible, .sw:focus-visible {
+  outline: none; border-color: var(--ring); box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 50%, transparent); }
+
+/* Abertura */
+.abertura { display: grid; gap: 10px; padding-top: 28px; max-width: 70ch; }
+.abertura h2 { font-size: 26px; font-weight: 700; }
+.faixa-marca { height: 6px; width: 120px; border-radius: 99px; background: var(--gradiente-marca); }
+
+/* Componentes no estilo da spartan (maia) */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 36px; padding: 0 12px; white-space: nowrap;
+  border: 1px solid transparent; border-radius: var(--r-btn); font: 500 14px var(--font-sans); cursor: pointer; text-decoration: none;
+  transition: background-color .15s, color .15s; background-clip: padding-box; }
+.btn:active { transform: translateY(1px); }
+.btn svg { width: 16px; height: 16px; }
+.btn-padrao { background: var(--primary); color: var(--primary-foreground); }
+.btn-padrao:hover { background: color-mix(in oklab, var(--primary) 85%, var(--foreground)); }
+.btn-secundario { background: var(--secondary); color: var(--secondary-foreground); }
+.btn-secundario:hover { background: color-mix(in oklab, var(--secondary) 95%, var(--foreground)); }
+.btn-contorno { border-color: var(--contorno-borda); background: var(--contorno-fundo); color: var(--foreground); box-shadow: 0 1px 2px rgb(0 0 0 / .05); }
+.btn-contorno:hover { background: var(--contorno-hover); }
+.btn-fantasma { background: transparent; color: var(--foreground); }
+.btn-fantasma:hover { background: var(--fantasma-hover); }
+.btn-perigo { background: var(--perigo-fundo); color: var(--destructive); }
+.btn-perigo:hover { background: var(--perigo-hover); }
+.btn-link { background: transparent; color: var(--primary); padding: 0 4px; text-underline-offset: 4px; }
+.btn-link:hover { text-decoration: underline; }
+.btn-p { height: 32px; padding: 0 10px; font-size: 13px; }
+.btn-icone { width: 36px; padding: 0; }
+
+.campo { height: 36px; width: 100%; border: 1px solid var(--input); border-radius: var(--r-input); padding: 0 12px;
+  background: var(--campo-fundo); color: var(--foreground); font: 14px var(--font-sans); box-shadow: 0 1px 2px rgb(0 0 0 / .05); }
+.campo::placeholder { color: var(--muted-foreground); opacity: 1; }
+select.campo { appearance: none; padding-right: 34px; background-image: linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%), linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position: calc(100% - 18px) 15px, calc(100% - 13px) 15px; background-size: 5px 5px; background-repeat: no-repeat; }
+.campo-invalido { border-color: var(--destructive); box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 20%, transparent); }
+.erro { color: var(--destructive); font-size: 13px; }
+label.rot { font-size: 14px; font-weight: 500; line-height: 1; }
+.ajuda { font-size: 13px; color: var(--muted-foreground); }
+.campo-grupo { display: grid; gap: 8px; min-width: 0; }
+
+.cartao { background: var(--card); color: var(--card-foreground); border-radius: var(--r-card); box-shadow: 0 0 0 1px var(--hairline);
+  padding: 24px 0; display: grid; gap: 24px; min-width: 0; overflow: hidden; }
+.cartao > * { padding-inline: 24px; }
+.cartao-cab { display: grid; gap: 4px; }
+.cartao-cab h3 { font-size: 16px; font-weight: 500; }
+.cartao-cab p { color: var(--muted-foreground); font-size: 14px; }
+.cartao-rodape { display: flex; flex-wrap: wrap; gap: 8px; justify-content: flex-end; }
+
+.badge { display: inline-flex; align-items: center; gap: 4px; height: 20px; padding: 0 8px; border-radius: 99px; font-size: 12px; font-weight: 500; white-space: nowrap; border: 1px solid transparent; }
+.b-padrao { background: var(--primary); color: var(--primary-foreground); }
+.b-sec { background: var(--secondary); color: var(--secondary-foreground); }
+.b-contorno { border-color: var(--border); background: transparent; color: var(--foreground); }
+.b-ok { background: color-mix(in oklab, var(--success) 12%, transparent); color: var(--success); }
+.b-aviso { background: color-mix(in oklab, var(--warning) 12%, transparent); color: var(--warning); }
+.b-perigo { background: color-mix(in oklab, var(--destructive) 10%, transparent); color: var(--destructive); }
+.b-info { background: color-mix(in oklab, var(--info) 12%, transparent); color: var(--info); }
+
+.chk { appearance: none; width: 16px; height: 16px; margin: 0; border: 1px solid var(--input); border-radius: var(--r-check); background: var(--campo-fundo); display: inline-grid; place-content: center; cursor: pointer; flex: none; }
+.chk:checked { background: var(--primary); border-color: var(--primary); }
+.chk:checked::after { content: ""; width: 9px; height: 5px; border: 2px solid var(--primary-foreground); border-top: 0; border-right: 0; transform: rotate(-45deg) translate(1px, -1px); }
+.sw { appearance: none; width: 32px; height: 18px; margin: 0; border-radius: 99px; background: var(--input); position: relative; cursor: pointer; flex: none; border: 1px solid transparent; transition: background-color .15s; }
+.sw::after { content: ""; position: absolute; top: 0; left: 0; width: 16px; height: 16px; border-radius: 50%; background: var(--background); transition: transform .15s; }
+.sw:checked { background: var(--primary); }
+.sw:checked::after { transform: translateX(14px); }
+.linha-opcao { display: flex; align-items: center; gap: 10px; font-size: 14px; }
+
+.alerta { display: grid; grid-template-columns: auto 1fr; gap: 2px 10px; border: 1px solid var(--border); border-radius: var(--r-alert); padding: 12px 16px; background: var(--card); font-size: 14px; }
+.alerta svg { width: 16px; height: 16px; grid-row: span 2; margin-top: 2px; }
+.alerta strong { font-weight: 500; }
+.alerta .desc { color: var(--muted-foreground); }
+.alerta.perigo { color: var(--destructive); }
+.alerta.perigo .desc { color: color-mix(in oklab, var(--destructive) 90%, transparent); }
+
+.abas { display: inline-flex; background: var(--muted); border-radius: var(--r-tabs); padding: 3px; height: 36px; }
+.aba { border: 1px solid transparent; background: transparent; color: var(--muted-foreground); font: 500 14px var(--font-sans); padding: 0 10px; border-radius: var(--r-tab); cursor: pointer; }
+.aba[aria-selected="true"] { background: var(--background); color: var(--foreground); box-shadow: 0 1px 2px color-mix(in oklab, var(--foreground) 10%, transparent); }
+
+/* Tela de exemplo */
+.app { display: grid; grid-template-columns: 232px minmax(0, 1fr); border-radius: var(--r-card); box-shadow: 0 0 0 1px var(--hairline), 0 12px 32px -12px color-mix(in oklab, var(--foreground) 22%, transparent); overflow: hidden; background: var(--background); }
+.lateral { background: var(--sidebar); color: var(--sidebar-foreground); border-right: 1px solid var(--sidebar-border); padding: 16px 12px; display: grid; align-content: start; gap: 18px; }
+.logo { display: flex; align-items: center; gap: 8px; padding: 4px 8px; font-weight: 700; font-size: 15px; }
+.logo svg { width: 34px; height: 26px; }
+.menu { display: grid; gap: 2px; }
+.menu a { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--r-menu); color: var(--sidebar-foreground); text-decoration: none; font-size: 14px; }
+.menu a svg { width: 16px; height: 16px; color: var(--muted-foreground); }
+.menu a:hover, .menu a[aria-current="page"] { background: var(--sidebar-accent); color: var(--sidebar-accent-foreground); }
+.menu a[aria-current="page"] svg, .menu a:hover svg { color: currentColor; }
+.lateral .rotulo { padding: 0 12px; }
+.principal { display: grid; align-content: start; gap: 20px; padding: 20px 24px 28px; min-width: 0; }
+.cabecalho-app { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.cabecalho-app h3 { font-size: 22px; font-weight: 600; }
+.busca { display: flex; gap: 8px; align-items: center; flex: 1 1 260px; max-width: 420px; }
+.numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.numero { padding: 16px 0; gap: 6px; }
+.numero > * { padding-inline: 16px; }
+.numero .valor { font-size: 24px; font-weight: 600; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.numero .delta { font-size: 13px; }
+.grade-dupla { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.rolagem { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th { text-align: left; font-weight: 500; height: 44px; padding: 0 12px; white-space: nowrap; border-bottom: 1px solid var(--border); }
+td { padding: 11px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; }
+tbody tr:hover { background: color-mix(in oklab, var(--muted) 50%, transparent); }
+tbody tr.sel { background: var(--muted); }
+td.num { font-variant-numeric: tabular-nums; text-align: right; }
+th.num { text-align: right; }
+.form { display: grid; gap: 16px; }
+.form-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+
+/* Referências */
+.secao { display: grid; gap: 16px; }
+.secao-cab { display: grid; gap: 6px; max-width: 70ch; }
+.vitrine { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.amostras { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+.amostra { display: grid; grid-template-rows: 54px auto; border-radius: calc(var(--radius) * 1.2); overflow: hidden; box-shadow: 0 0 0 1px var(--hairline); background: var(--card); }
+.amostra .cor { display: grid; place-items: center; font-weight: 600; font-size: 13px; }
+.amostra .info { padding: 8px 10px; display: grid; gap: 1px; }
+.amostra .nome { font: 12px var(--font-mono); }
+.amostra .hex { font: 12px var(--font-mono); color: var(--muted-foreground); }
+.grafico { display: flex; gap: 8px; align-items: end; height: 96px; padding: 8px 0 0; border-bottom: 1px solid var(--border); }
+.grafico span { flex: 1; border-radius: 6px 6px 0 0; }
+.tabela-contraste td:first-child { white-space: normal; min-width: 240px; }
+.par { display: inline-flex; align-items: center; gap: 6px; font: 12px var(--font-mono); }
+.par i { width: 22px; height: 22px; border-radius: 6px; display: inline-grid; place-items: center; font-style: normal; font: 600 12px var(--font-sans); box-shadow: 0 0 0 1px var(--hairline); }
+.resumo-contraste { display: flex; flex-wrap: wrap; gap: 10px; }
+.decisoes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; }
+.decisao { padding: 18px 0; gap: 8px; }
+.decisao > * { padding-inline: 18px; }
+.decisao h3 { font-size: 15px; font-weight: 600; }
+.decisao p { color: var(--muted-foreground); }
+.dialogo-fundo { border-radius: var(--r-card); padding: 28px 16px; background: color-mix(in oklab, var(--foreground) 45%, transparent); display: grid; place-items: center; }
+.dialogo { background: var(--popover); color: var(--popover-foreground); border-radius: var(--r-dialog); padding: 24px; display: grid; gap: 20px; width: 100%; max-width: 420px; box-shadow: 0 0 0 1px color-mix(in oklab, var(--foreground) 5%, transparent), 0 20px 40px -16px rgb(0 0 0 / .4); }
+.dialogo h3 { font-size: 16px; font-weight: 600; }
+
+@media (max-width: 900px) {
+  .grade-dupla { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 720px) {
+  .app { grid-template-columns: minmax(0, 1fr); }
+  .lateral { border-right: 0; border-bottom: 1px solid var(--sidebar-border); }
+  .lateral .menu { grid-auto-flow: column; overflow-x: auto; }
+  .lateral .rotulo, .lateral .menu-2 { display: none; }
+  .numeros { grid-template-columns: minmax(0, 1fr); }
+  .form-2 { grid-template-columns: minmax(0, 1fr); }
+  .principal { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="topo">
+  <div class="topo-dentro">
+    <div class="marca-titulo">
+      <svg viewBox="0 0 120 90" width="34" height="26" aria-hidden="true"><defs><linearGradient id="g0" x1="0" x2="1"><stop offset="0" stop-color="var(--marca)"/><stop offset="1" stop-color="var(--marca-2)"/></linearGradient></defs><path d="M54 10a24 24 0 0 1 24 24 16 16 0 0 1 16 16 16 16 0 0 1-16 16H30a24 24 0 0 1 0-48 16 16 0 0 1 24-8z" fill="none" stroke="url(#g0)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <h1>Tema NuvyTech</h1><span class="versao">nuvy-ui 1.0</span>
+    </div>
+    <div class="controles">
+      <div class="grupo"><span class="rotulo" id="r-modo">Modo</span>
+        <div class="segmentado" role="group" aria-labelledby="r-modo" data-controle="modo">
+          <button type="button" data-valor="dark" aria-pressed="true">Escuro</button>
+          <button type="button" data-valor="light" aria-pressed="false">Claro</button>
+        </div></div>
+    </div>
+  </div>
+</div>
+
+<main class="pagina">
+  <section class="abertura">
+    <div class="faixa-marca" aria-hidden="true"></div>
+    <h2>Um tema só, azul NuvyTech, escuro por padrão</h2>
+    <p class="sub">Tema aprovado pelo Pedro em 18/10/2026: modo escuro, marca NuvyTech em todos os apps e cantos padrão. Os componentes desenhados aqui seguem as medidas do estilo “vega” da spartan, o de cantos padrão. O modo claro continua disponível pelo botão de cada app.</p>
+  </section>
+
+  <section class="app" aria-label="Tela de exemplo">
+    <aside class="lateral">
+      <div class="logo">
+        <svg viewBox="0 0 120 90" aria-hidden="true"><defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="var(--marca)"/><stop offset="1" stop-color="var(--marca-2)"/></linearGradient></defs><path d="M54 10a24 24 0 0 1 24 24 16 16 0 0 1 16 16 16 16 0 0 1-16 16H30a24 24 0 0 1 0-48 16 16 0 0 1 24-8z" fill="none" stroke="url(#g1)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="34" cy="40" r="4" fill="var(--marca)"/><circle cx="62" cy="32" r="4" fill="var(--marca)"/><circle cx="80" cy="56" r="4" fill="var(--marca-2)"/></svg>
+        <span data-texto="app">NuvyTech</span>
+      </div>
+      <span class="rotulo">Menu</span>
+      <nav class="menu" aria-label="Menu do app de exemplo">
+        <a href="#painel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>Painel</a>
+        <a href="#clientes" aria-current="page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>Clientes</a>
+        <a href="#item3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></svg><span data-texto="item3">Projetos</span></a>
+        <a href="#cobrancas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Cobranças</a>
+      </nav>
+      <nav class="menu menu-2" aria-label="Conta">
+        <a href="#config"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Configurações</a>
+      </nav>
+    </aside>
+    <div class="principal">
+      <div class="cabecalho-app">
+        <h3>Clientes</h3>
+        <div class="busca">
+          <input class="campo" id="busca" type="search" placeholder="Buscar por nome ou CPF/CNPJ" aria-label="Buscar clientes">
+          <button type="button" class="btn btn-padrao"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Novo cliente</button>
+        </div>
+      </div>
+      <div class="numeros">
+        <div class="cartao numero"><span class="sub">Clientes ativos</span><span class="valor">128</span><span class="delta" style="color:var(--success)">+6 neste mês</span></div>
+        <div class="cartao numero"><span class="sub">A receber em outubro</span><span class="valor">R$ 18.420,00</span><span class="delta sub">32 cobranças</span></div>
+        <div class="cartao numero"><span class="sub">Em atraso</span><span class="valor">R$ 2.140,00</span><span class="delta" style="color:var(--destructive)">4 clientes</span></div>
+      </div>
+      <div class="grade-dupla">
+        <div class="cartao" style="padding-bottom:8px">
+          <div class="cartao-cab"><h3>Últimos clientes</h3><p>Exemplo com dados fictícios.</p></div>
+          <div class="rolagem" style="padding-inline:12px">
+            <table>
+              <thead><tr><th>Nome</th><th>Cidade</th><th>Situação</th><th class="num">Mensal</th></tr></thead>
+              <tbody>
+                <tr><td>Padaria Grão Dourado</td><td>Cuiabá – MT</td><td><span class="badge b-ok">Em dia</span></td><td class="num">R$ 390,00</td></tr>
+                <tr class="sel"><td>Clínica Sorriso Vita</td><td>Várzea Grande – MT</td><td><span class="badge b-aviso">Vence hoje</span></td><td class="num">R$ 1.250,00</td></tr>
+                <tr><td>Oficina Prime Auto</td><td>Rondonópolis – MT</td><td><span class="badge b-perigo">Em atraso</span></td><td class="num">R$ 640,00</td></tr>
+                <tr><td>Aura Estética</td><td>Sinop – MT</td><td><span class="badge b-info">Em teste</span></td><td class="num">R$ 0,00</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <form class="cartao" onsubmit="event.preventDefault()">
+          <div class="cartao-cab"><h3>Novo cliente</h3><p>Os campos com * são obrigatórios.</p></div>
+          <div class="form">
+            <div class="campo-grupo"><label class="rot" for="f-nome">Nome *</label><input class="campo" id="f-nome" value="Mercado Bom Preço"></div>
+            <div class="form-2">
+              <div class="campo-grupo"><label class="rot" for="f-doc">CPF ou CNPJ *</label><input class="campo campo-invalido" id="f-doc" value="12.345.678/0001-0" aria-invalid="true" aria-describedby="f-doc-erro"><span class="erro" id="f-doc-erro">CNPJ incompleto.</span></div>
+              <div class="campo-grupo"><label class="rot" for="f-cidade">Município</label><select class="campo" id="f-cidade"><option>Cuiabá – MT</option><option>Várzea Grande – MT</option><option>Sinop – MT</option></select></div>
+            </div>
+            <div class="campo-grupo"><label class="rot" for="f-email">E-mail</label><input class="campo" id="f-email" type="email" placeholder="nome@empresa.com.br"><span class="ajuda">Usado para mandar as cobranças.</span></div>
+            <label class="linha-opcao"><input class="chk" type="checkbox" id="f-nota" checked> Emitir nota fiscal todo mês</label>
+            <label class="linha-opcao"><input class="sw" type="checkbox" id="f-lembrete" role="switch" checked> Lembrete por e-mail antes do vencimento</label>
+          </div>
+          <div class="cartao-rodape"><button type="button" class="btn btn-fantasma">Cancelar</button><button type="submit" class="btn btn-padrao">Salvar cliente</button></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="t-comp">
+    <div class="secao-cab"><h2 id="t-comp">Componentes</h2><p class="sub">Passe o mouse nos botões: o principal escurece no modo claro e clareia no escuro, para o texto continuar legível.</p></div>
+    <div class="vitrine">
+      <button type="button" class="btn btn-padrao">Principal</button>
+      <button type="button" class="btn btn-secundario">Secundário</button>
+      <button type="button" class="btn btn-contorno">Contorno</button>
+      <button type="button" class="btn btn-fantasma">Discreto</button>
+      <button type="button" class="btn btn-perigo">Excluir</button>
+      <button type="button" class="btn btn-link">Link</button>
+      <button type="button" class="btn btn-padrao btn-p">Pequeno</button>
+      <button type="button" class="btn btn-contorno btn-icone" aria-label="Mais opções"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg></button>
+    </div>
+    <div class="vitrine">
+      <span class="badge b-padrao">Novo</span><span class="badge b-sec">Rascunho</span><span class="badge b-contorno">Arquivado</span>
+      <span class="badge b-ok">Paga</span><span class="badge b-aviso">Pendente</span><span class="badge b-perigo">Recusada</span><span class="badge b-info">Em análise</span>
+    </div>
+    <div class="vitrine">
+      <div class="abas" role="tablist" aria-label="Abas de exemplo">
+        <button type="button" class="aba" role="tab" aria-selected="true">Dados</button>
+        <button type="button" class="aba" role="tab" aria-selected="false">Cobranças</button>
+        <button type="button" class="aba" role="tab" aria-selected="false">Notas</button>
+      </div>
+    </div>
+    <div class="grade-dupla">
+      <div style="display:grid;gap:10px">
+        <div class="alerta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg><strong>Nota enviada para a prefeitura</strong><span class="desc">A resposta costuma chegar em alguns minutos.</span></div>
+        <div class="alerta perigo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4M12 16h.01"/></svg><strong>A prefeitura recusou a nota</strong><span class="desc">Código de serviço 1.07 não é aceito em Cuiabá.</span></div>
+      </div>
+      <div class="dialogo-fundo">
+        <div class="dialogo" role="dialog" aria-label="Exemplo de confirmação">
+          <div style="display:grid;gap:6px"><h3>Excluir este cliente?</h3><p class="sub">As cobranças e notas dele continuam no histórico.</p></div>
+          <div class="cartao-rodape" style="padding:0"><button type="button" class="btn btn-contorno">Cancelar</button><button type="button" class="btn btn-perigo">Excluir</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="secao" aria-labelledby="t-cores">
+    <div class="secao-cab"><h2 id="t-cores">Cores desta marca</h2><p class="sub" id="cores-sub">Valores do modo atual. Nos projetos, as cores ficam em OKLCH, como a spartan pede.</p></div>
+    <div class="amostras" id="amostras"></div>
+    <div><span class="rotulo">Gráficos</span><div class="grafico" id="grafico" aria-label="Cores de gráfico"></div></div>
+  </section>
+
+  <section class="secao" aria-labelledby="t-contraste">
+    <div class="secao-cab"><h2 id="t-contraste">Contraste</h2><p class="sub">Cada combinação que os componentes usam foi medida pela regra AA: texto com pelo menos 4,5:1 e bordas de campo, foco e gráficos com pelo menos 3:1. Abaixo, as mais justas da marca e do modo atuais.</p></div>
+    <div class="resumo-contraste" id="resumo-contraste"></div>
+    <div class="cartao" style="padding:8px 0"><div class="rolagem" style="padding-inline:12px"><table class="tabela-contraste"><thead><tr><th>Combinação</th><th>Cores</th><th class="num">Contraste</th><th class="num">Mínimo</th></tr></thead><tbody id="contraste"></tbody></table></div></div>
+  </section>
+
+  <section class="secao" aria-labelledby="t-dec">
+    <div class="secao-cab"><h2 id="t-dec">Decisões</h2><p class="sub">O que vale para todos os projetos.</p></div>
+    <div class="decisoes">
+      <div class="cartao decisao"><h3>Escuro por padrão</h3><p>Todo app abre no escuro. Nos apps Angular, um botão troca para o claro e a escolha fica guardada no navegador. O portal do site-factory e a tela de login ficam sempre no escuro, porque não usam JavaScript.</p></div>
+      <div class="cartao decisao"><h3>Azul NuvyTech em todos os apps</h3><p>GerCliente, nuvydoc, CRM, Desaparecidos, iddle, o site e o portal usam a mesma cor. Os logos de todos já usam esse azul. No escuro, o botão é #51a2f8 com texto escuro; no claro, #0062cc com texto branco.</p></div>
+      <div class="cartao decisao"><h3>Cantos padrão da spartan</h3><p>Estilo “vega”: botões e campos com 8 px, cartões e janelas com 14 px, etiquetas em pílula.</p></div>
+      <div class="cartao decisao"><h3>Fonte Inter, servida pelo próprio app</h3><p>Pelo pacote @fontsource-variable/inter, sem chamar o Google Fonts.</p></div>
+      <div class="cartao decisao"><h3>Onde o tema mora: repositório nuvy-ui</h3><p>Um repositório privado pequeno com as cores, o gerador e a conferência de contraste. Cada projeto recebe uma cópia do arquivo do tema, e o build não precisa de chave para baixar nada.</p></div>
+      <div class="cartao decisao"><h3>Ícones Lucide e avisos da spartan</h3><p>Ícones Lucide no lugar dos PrimeIcons e do Material; avisos rápidos com o toast da spartan.</p></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const DADOS = /*DADOS*/;
+const raiz = document.documentElement;
+const estado = { modo: 'dark' };
+try { const s = JSON.parse(localStorage.getItem('previa-tema-nuvy-2') || '{}'); if (s.modo === 'light' || s.modo === 'dark') estado.modo = s.modo; } catch (e) {}
+function modoAtual() { return estado.modo === 'light' ? 'claro' : 'escuro'; }
+const fmt = (n) => n.toFixed(2).replace('.', ',');
+function aplicar() {
+  raiz.setAttribute('data-theme', estado.modo);
+  document.querySelectorAll('[data-controle]').forEach((g) => g.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.valor === estado[g.dataset.controle]))));
+  const modo = modoAtual();
+  const t = DADOS.tokens.marcas.nuvytech[modo];
+  const grupos = [['background','foreground'],['card','card-foreground'],['primary','primary-foreground'],['secondary','secondary-foreground'],['muted','muted-foreground'],['accent','accent-foreground'],['destructive','destructive-foreground'],['success','success-foreground'],['warning','warning-foreground'],['info','info-foreground'],['input','foreground'],['ring','background'],['sidebar','sidebar-foreground']];
+  document.getElementById('amostras').innerHTML = grupos.map(([f, c]) => `<div class="amostra"><div class="cor" style="background:${t[f].hex};color:${t[c].hex}">Aa</div><div class="info"><span class="nome">--${f}</span><span class="hex">${t[f].hex}</span></div></div>`).join('')
+    + `<div class="amostra"><div class="cor" style="background:${DADOS.tokens.marcas.nuvytech.marca};color:#fff"></div><div class="info"><span class="nome">--marca</span><span class="hex">${DADOS.tokens.marcas.nuvytech.marca}</span></div></div>`;
+  document.getElementById('cores-sub').textContent = `${DADOS.tokens.marcas.nuvytech.nome}, modo ${modo}. Nos projetos, as cores ficam em OKLCH, como a spartan pede.`;
+  const alturas = [86, 64, 72, 48, 58];
+  document.getElementById('grafico').innerHTML = alturas.map((h, i) => `<span title="--chart-${i + 1} ${t['chart-' + (i + 1)].hex}" style="height:${h}%;background:${t['chart-' + (i + 1)].hex}"></span>`).join('');
+  const lista = DADOS.contraste[`nuvytech-${modo}`];
+  let total = 0, ok = 0;
+  for (const k of Object.keys(DADOS.contraste)) for (const p of DADOS.contraste[k]) { total++; if (p.r >= p.min) ok++; }
+  const daqui = lista.filter((p) => p.r >= p.min).length;
+  document.getElementById('resumo-contraste').innerHTML =
+    `<span class="badge b-ok">${daqui} de ${lista.length} aprovadas aqui</span><span class="badge b-contorno">${ok} de ${total} no claro e no escuro</span>`;
+  const justas = [...lista].sort((a, b) => a.r / a.min - b.r / b.min).slice(0, 8);
+  document.getElementById('contraste').innerHTML = justas.map((p) => `<tr><td>${p.nome}</td><td><span class="par"><i style="background:${p.fundo};color:${p.fg}">A</i>${p.fg} em ${p.fundo}</span></td><td class="num">${fmt(p.r)}:1</td><td class="num">${fmt(p.min)}:1</td></tr>`).join('');
+  try { localStorage.setItem('previa-tema-nuvy-2', JSON.stringify(estado)); } catch (e) {}
+}
+document.querySelectorAll('[data-controle]').forEach((g) => g.addEventListener('click', (ev) => {
+  const b = ev.target.closest('button'); if (!b) return;
+  estado[g.dataset.controle] = b.dataset.valor; aplicar();
+}));
+document.querySelectorAll('.abas').forEach((l) => l.addEventListener('click', (ev) => { const a = ev.target.closest('.aba'); if (!a) return; l.querySelectorAll('.aba').forEach((x) => x.setAttribute('aria-selected', String(x === a))); }));
+aplicar();
+</script>
