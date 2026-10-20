@@ -52,7 +52,7 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 5. **`src/styles.css`** (CSS puro, não SCSS), nesta ordem:
 
    ```css
-   @layer theme, base, components, utilities;
+   @layer theme, base, ng-icon, components, utilities;
    @import 'tailwindcss/theme.css' layer(theme);
    @import 'tailwindcss/preflight.css' layer(base);
    @import 'tailwindcss/utilities.css' layer(utilities) source(none);
@@ -64,6 +64,8 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    @import '@fontsource-variable/inter';
    @import './styles/nuvy-tema.css';
    ```
+
+   A camada `ng-icon` vem declarada abaixo dos utilitários porque o `@ng-icons` 33 põe a cor do ícone em `@layer ng-icon`. Sem ela na lista, essa camada nasce por último e vence o `text-primary` (ou qualquer cor) posto direto no `<ng-icon>`. Se o projeto não usa o Material, importe também `@angular/cdk/a11y-prebuilt.css`, senão o texto do `LiveAnnouncer` aparece visível no fim da página.
 
    O `source(none)` com os `@source` faz o Tailwind ler só o código do app e os componentes helm, sem os testes. Se os specs ou utilitários de teste entrassem na varredura, um comentário como `bg-green-700` iria parar no CSS de produção. Sem isso, a varredura automática pega pastas de build versionadas (como o `docs/` do GitHub Pages) e qualquer outra coisa da raiz.
 
@@ -102,7 +104,11 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
    - No componente aberto, use `injectBrnDialogContext<T>()` e `inject(BrnDialogRef)`, com `host: { class: 'flex flex-col gap-6' }`.
    - **Aviso atrás do diálogo:** no CDK 21+, o diálogo abre na camada do topo do navegador (popover), e o toast do sonner fica atrás do fundo escuro. O piloto resolveu com um serviço de diálogo local configurado com `usePopover: false`. Prover o `provideSpartanHlm()` na raiz também resolve, mas custa ≈46 kB no bundle inicial. Use também `closeOnOutsidePointerEvents: false` se houver aviso com botão "Fechar" na tela: sem isso, fechar o aviso fecha o formulário.
 
-   **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`. O `hlm-field-error` tem `role="alert"`. Se o foco for para o campo com erro, o leitor de tela lê a mensagem duas vezes: pelo alerta e pelo `aria-describedby`. É aceitável, mas não acrescente mais um `aria-live` por cima.
+   **Formulário:** `hlm-field` + `hlmFieldLabel` + `hlmInput` já ligam `for`, `aria-invalid` e `aria-describedby`. Quando não há `BrnFieldControl` (campo próprio, ngx-mask fora do padrão), o `hlm-field-error` precisa de `forceShow` para aparecer.
+
+   **Classes do host x variantes no escuro:** as classes `dark:` das variantes da spartan vencem as classes que você põe no host. Exemplo: um `hlmBadge variant="destructive"` com cor própria volta para o vermelho translúcido no escuro. Para cor própria, use a variante padrão com as suas classes.
+
+   **Calendário/date-picker:** `provideBrnCalendarI18n` na raiz soma ≈170 kB ao bundle inicial. Ponha nos `providers` da rota ou do layout que usa o calendário. O `hlm-field-error` tem `role="alert"`. Se o foco for para o campo com erro, o leitor de tela lê a mensagem duas vezes: pelo alerta e pelo `aria-describedby`. É aceitável, mas não acrescente mais um `aria-live` por cima.
 
    **Orçamento do bundle:** ponha o `maximumError` do bundle inicial perto do limite real (por exemplo 550 kB), e não em 1 MB. Assim, um import que puxe o overlay do CDK de volta quebra o build, em vez de passar em silêncio.
 

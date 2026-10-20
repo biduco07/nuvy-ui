@@ -16,3 +16,15 @@ if (typeof window !== 'undefined' && !window.matchMedia) {
     }),
   });
 }
+
+// O jsdom também não tem ResizeObserver, que componentes com overlay da spartan usam.
+if (typeof window !== 'undefined' && !('ResizeObserver' in window)) {
+  Object.defineProperty(window, 'ResizeObserver', {
+    writable: true,
+    value: class {
+      observe(): void {}
+      unobserve(): void {}
+      disconnect(): void {}
+    },
+  });
+}
