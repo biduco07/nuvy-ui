@@ -20,7 +20,7 @@ test('tema.css traz a regra do hover, o contorno cheio e a versão', () => {
   assert.match(css, /color-mix\(in oklab, var\(--primary\) 85%, var\(--foreground\)\)/);
   assert.match(css, /:is\(\[data-slot='button'\], a\[data-slot='badge'\]\)\.bg-primary:hover/);
   assert.match(css, /@apply border-border outline-ring;/);
-  assert.match(css, /nuvy-ui 1\.1\.0/);
+  assert.match(css, /nuvy-ui 1.2.0/);
 });
 
 test('tokens-escuro.css é só escuro, direto no :root', () => {
@@ -29,9 +29,9 @@ test('tokens-escuro.css é só escuro, direto no :root', () => {
   assert.doesNotMatch(css, /\.dark \{/);
 });
 
-test('tokens.json tem a versão 1.1.0 e os dois modos', () => {
+test('tokens.json tem a versão 1.2.0 e os dois modos', () => {
   const json = JSON.parse(ler('tokens.json'));
-  assert.equal(json.versao, '1.1.0');
+  assert.equal(json.versao, '1.2.0');
   assert.ok(json.marcas.nuvytech.escuro.primary.hex);
   assert.ok(json.marcas.nuvytech.claro.primary.hex);
 });

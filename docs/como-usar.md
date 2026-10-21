@@ -130,12 +130,46 @@ Vale para CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente e nuv
 ## Páginas sem JavaScript (portal do site-factory, login do Keycloak)
 
 - Use `dist/nuvytech/tokens-escuro.css`: são só as variáveis do escuro, direto no `:root`, então a página é sempre escura.
-- Reestilize os elementos com as medidas do estilo vega:
+- Para a estrutura da página (cabeçalho, cartões, botões, formulários, tabelas) use o [Layout padrão](#layout-padrão) abaixo. Se precisar estilizar à mão, use as medidas do estilo vega:
   - botão e campo com `border-radius: calc(var(--radius) * 0.8)`;
   - cartão e janela com `calc(var(--radius) * 1.4)`;
   - borda de campo `var(--input)`;
   - fundo de campo `color-mix(in oklab, var(--input) 30%, transparent)`;
   - foco com a borda em `var(--ring)`.
+
+## Layout padrão
+
+Arquivo: `dist/nuvytech/layout.css` (fonte em `layout/layout.css`). Exemplo completo: `modelos/layout-exemplo.html`.
+
+**Quando usar**
+- Páginas sem spartan: portal do site-factory, login do Keycloak, páginas estáticas e relatórios HTML.
+- Nos projetos Angular a spartan já segue os mesmos tokens e **não** usa este arquivo. Ele serve de referência visual: cabeçalho com marca, cartões, espaçamentos, selos e avisos.
+
+**Como usar**
+1. Carregue as variáveis (`tokens-escuro.css` para página sempre escura e sem JavaScript, ou `tokens.css`) e depois o layout:
+   ```html
+   <link rel="stylesheet" href="tokens-escuro.css">
+   <link rel="stylesheet" href="layout.css">
+   <body class="nv-pagina">
+   ```
+2. Monte a página com as classes abaixo. O layout só usa variáveis do tema (nenhuma cor fixa) e todas as classes começam com `nv-`.
+
+| Peça | Classes |
+|---|---|
+| Página | `nv-pagina` (no `<body>`), `nv-pagina--estreita` (telas de acesso), `nv-pagina--leitura`, `nv-principal`, `nv-pular`, `nv-rodape` |
+| Cabeçalho | `nv-cabecalho`, `nv-cabecalho__interno`, `nv-marca` (`__logo`, `__sub`), `nv-nav`, `nv-nav__link` (`aria-current="page"` marca a atual), `nv-conta` (`__nome`, `__papel`) |
+| Texto | `nv-titulo-pagina`, `nv-acoes`, `nv-sobretitulo`, `nv-texto-suave`, `nv-num`, `nv-codigo` |
+| Cartão e grade | `nv-cartao` (`--destaque`, `--atencao`), `nv-grade`, `nv-indicadores`, `nv-indicador` (`__valor`, `__nome`, `--atencao`) |
+| Botão | `nv-botao`, `nv-botao--secundario`, `--perigo`, `--pequeno`, `--grande`, `--total` |
+| Formulário | `nv-formulario` (`--duas-colunas`, `__acoes`), `nv-campo` (`--largo`), `nv-rotulo`, `nv-entrada` (`--invalida`, `--total`), `nv-selecao`, `nv-area-texto`, `nv-marcador`, `nv-ajuda`, `nv-erro-campo`, `nv-grupo`, `nv-filtros` |
+| Tabela | `nv-tabela-caixa`, `nv-tabela`, `nv-tabela__detalhe` |
+| Situação | `nv-selo` (`--sucesso`, `--atencao`, `--perigo`, `--info`, `--destaque`), `nv-aviso` (`--sucesso`, `--atencao`, `--erro`) |
+| Outros | `nv-lista`, `nv-vazio`, `nv-barra`, `nv-dados` |
+
+**Regras**
+- O foco do teclado usa o contorno cheio com `--ring` (`:focus-visible`); não o remova.
+- No celular (até 720 px) a navegação quebra de linha, as tabelas rolam na horizontal e os formulários de duas colunas viram uma.
+- Para mudar o layout, edite `layout/layout.css`, rode `npm run gerar` e `npm test`.
 
 ## Mudar uma cor
 
