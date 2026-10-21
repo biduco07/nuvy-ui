@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout padrão NuvyTech — exemplo</title>
+  <!-- Em um projeto, copie os dois arquivos de dist/nuvytech/ e ajuste os caminhos. -->
+  <link rel="stylesheet" href="../dist/nuvytech/tokens-escuro.css">
+  <link rel="stylesheet" href="../dist/nuvytech/layout.css">
+</head>
+<body class="nv-pagina">
+  <a class="nv-pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <header class="nv-cabecalho">
+    <div class="nv-cabecalho__interno">
+      <a class="nv-marca" href="#">
+        <svg class="nv-marca__logo" viewBox="0 0 30 30" aria-hidden="true">
+          <circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="3"/>
+          <circle cx="15" cy="15" r="5" fill="currentColor"/>
+        </svg>
+        <span>Empresa Exemplo<span class="nv-marca__sub">Portal do cliente</span></span>
+      </a>
+      <nav class="nv-nav" aria-label="Principal">
+        <a class="nv-nav__link" href="#" aria-current="page">Painel</a>
+        <a class="nv-nav__link" href="#">Contratos</a>
+        <a class="nv-nav__link" href="#">Notas</a>
+        <a class="nv-nav__link" href="#">Ajuda</a>
+      </nav>
+      <div class="nv-conta">
+        <span class="nv-conta__nome">Maria Silva</span>
+        <span class="nv-conta__papel">Administradora</span>
+        <a class="nv-botao nv-botao--secundario nv-botao--pequeno" href="#">Sair</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="nv-principal" id="conteudo">
+    <div class="nv-titulo-pagina">
+      <h1>Painel <span class="nv-selo nv-selo--sucesso">Ativo</span></h1>
+      <div class="nv-acoes">
+        <a class="nv-botao nv-botao--secundario" href="#">Exportar</a>
+        <button class="nv-botao" type="button">Nova nota</button>
+      </div>
+    </div>
+
+    <div class="nv-aviso nv-aviso--sucesso" role="status">Nota 1042 enviada para a prefeitura.</div>
+    <div class="nv-aviso nv-aviso--atencao">Dois contratos vencem nos próximos 7 dias.</div>
+    <div class="nv-aviso nv-aviso--erro" role="alert">Não foi possível conectar à prefeitura. Tente de novo.</div>
+    <div class="nv-aviso">O fechamento do mês acontece no dia 30.</div>
+
+    <div class="nv-indicadores">
+      <div class="nv-indicador"><span class="nv-indicador__valor">128</span><span class="nv-indicador__nome">Notas emitidas</span></div>
+      <div class="nv-indicador"><span class="nv-indicador__valor">R$ 48.230,00</span><span class="nv-indicador__nome">Faturado no mês</span></div>
+      <div class="nv-indicador"><span class="nv-indicador__valor">12</span><span class="nv-indicador__nome">Clientes ativos</span></div>
+      <div class="nv-indicador nv-indicador--atencao"><span class="nv-indicador__valor">3</span><span class="nv-indicador__nome">Notas com erro</span></div>
+    </div>
+
+    <div class="nv-grade">
+      <section class="nv-cartao">
+        <p class="nv-sobretitulo">Próxima ação</p>
+        <h2>Conferir os dados do cliente</h2>
+        <p class="nv-texto-suave">Falta o código do município para emitir a nota.</p>
+        <div class="nv-acoes"><a class="nv-botao" href="#">Abrir cadastro</a></div>
+      </section>
+      <section class="nv-cartao nv-cartao--destaque">
+        <h2>Resumo do projeto</h2>
+        <div class="nv-barra" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" aria-label="Andamento">
+          <span class="nv-barra__preenchimento" style="width: 65%"></span>
+        </div>
+        <p class="nv-texto-suave">65% concluído.</p>
+        <dl class="nv-dados">
+          <div><dt>Cliente</dt><dd>Padaria Modelo Ltda</dd></div>
+          <div><dt>Município</dt><dd>Exemplópolis</dd></div>
+        </dl>
+      </section>
+      <section class="nv-cartao nv-cartao--atencao">
+        <h2>Atenção</h2>
+        <p>Certificado digital vence em 12 dias.</p>
+        <span class="nv-selo nv-selo--atencao">Vence em breve</span>
+      </section>
+    </div>
+
+    <section class="nv-cartao">
+      <h2>Notas recentes</h2>
+      <div class="nv-tabela-caixa">
+        <table class="nv-tabela">
+          <thead>
+            <tr><th>Número</th><th>Cliente</th><th>Situação</th><th class="nv-num">Valor</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>1042</td><td>Padaria Modelo Ltda<span class="nv-tabela__detalhe">Exemplópolis</span></td><td><span class="nv-selo nv-selo--sucesso">Autorizada</span></td><td class="nv-num">R$ 1.250,00</td></tr>
+            <tr><td>1041</td><td>Oficina Fictícia ME</td><td><span class="nv-selo nv-selo--info">Em processamento</span></td><td class="nv-num">R$ 890,50</td></tr>
+            <tr><td>1040</td><td>Clínica de Exemplo</td><td><span class="nv-selo nv-selo--perigo">Rejeitada</span></td><td class="nv-num">R$ 3.400,00</td></tr>
+            <tr><td>1039</td><td>Escola Imaginária</td><td><span class="nv-selo nv-selo--atencao">Pendente</span></td><td class="nv-num">R$ 720,00</td></tr>
+            <tr><td>1038</td><td>Loja Teste</td><td><span class="nv-selo">Rascunho</span> <span class="nv-selo nv-selo--destaque">Novo</span></td><td class="nv-num">R$ 150,00</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="nv-cartao">
+      <h2>Novo cliente</h2>
+      <form class="nv-formulario nv-formulario--duas-colunas" action="#" onsubmit="return false">
+        <div class="nv-campo">
+          <label class="nv-rotulo" for="nome">Nome</label>
+          <input class="nv-entrada" id="nome" type="text" value="Padaria Modelo Ltda">
+          <p class="nv-ajuda">Como aparece na nota.</p>
+        </div>
+        <div class="nv-campo">
+          <label class="nv-rotulo" for="doc">CNPJ</label>
+          <input class="nv-entrada nv-entrada--invalida" id="doc" type="text" value="00.000.000/0000-00" aria-invalid="true" aria-describedby="doc-erro">
+          <p class="nv-erro-campo" id="doc-erro">CNPJ inválido.</p>
+        </div>
+        <div class="nv-campo">
+          <label class="nv-rotulo" for="regime">Regime</label>
+          <select class="nv-selecao" id="regime">
+            <option>Simples Nacional</option>
+            <option>Lucro presumido</option>
+          </select>
+        </div>
+        <div class="nv-campo">
+          <label class="nv-rotulo" for="mail">E-mail</label>
+          <input class="nv-entrada" id="mail" type="email" placeholder="contato@exemplo.com.br">
+        </div>
+        <div class="nv-campo nv-campo--largo">
+          <label class="nv-rotulo" for="obs">Observações</label>
+          <textarea class="nv-area-texto nv-entrada--total" id="obs"></textarea>
+        </div>
+        <fieldset class="nv-grupo nv-campo--largo">
+          <legend class="nv-grupo__titulo">Avisos</legend>
+          <label><input class="nv-marcador" type="checkbox" checked> Avisar por e-mail quando a nota for autorizada</label>
+        </fieldset>
+        <div class="nv-formulario__acoes">
+          <button class="nv-botao" type="submit">Salvar</button>
+          <button class="nv-botao nv-botao--secundario" type="button">Cancelar</button>
+          <button class="nv-botao nv-botao--perigo" type="button">Excluir</button>
+          <button class="nv-botao" type="button" disabled>Indisponível</button>
+          <button class="nv-botao nv-botao--grande" type="button">Grande</button>
+          <button class="nv-botao nv-botao--pequeno" type="button">Pequeno</button>
+        </div>
+      </form>
+    </section>
+
+    <section class="nv-cartao">
+      <h2>Filtros e lista</h2>
+      <form class="nv-filtros" action="#" onsubmit="return false">
+        <div class="nv-campo">
+          <label class="nv-rotulo" for="f-mes">Mês</label>
+          <select class="nv-selecao" id="f-mes"><option>Outubro</option></select>
+        </div>
+        <button class="nv-botao" type="submit">Filtrar</button>
+      </form>
+      <ul class="nv-lista">
+        <li>Contrato 17 <span class="nv-selo nv-selo--sucesso">Em dia</span></li>
+        <li>Contrato 18 <span class="nv-selo nv-selo--atencao">Vence em 7 dias</span></li>
+      </ul>
+      <div class="nv-vazio">
+        <span class="nv-vazio__titulo">Nenhuma nota cancelada</span>
+        <p>Quando houver, elas aparecem aqui.</p>
+      </div>
+    </section>
+
+    <footer class="nv-rodape">Dados fictícios, só para demonstrar o layout. Código em <span class="nv-codigo">nuvy-ui</span>.</footer>
+  </main>
+</body>
+</html>

@@ -1,12 +1,12 @@
 // Gera os arquivos do tema a partir de tokens.mjs.
-import { mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rgbParaHex, rgbParaOklch } from './cor.mjs';
 import { comum, marcas, graficos, forma } from '../tokens.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.1.0';
+const VERSAO = '1.2.0';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {
@@ -48,6 +48,15 @@ function bloco(seletor, t, extra = {}) {
 const cabecalho = (marca) =>
   `/* nuvy-ui ${VERSAO} — tema NuvyTech, marca "${marca}". Arquivo gerado: não edite aqui.\n` +
   `   Para mudar, edite tokens.mjs no nuvy-ui, rode "npm run gerar" e copie de novo. */\n\n`;
+
+const cabecalhoLayout = () =>
+  `/* nuvy-ui ${VERSAO} — layout padrão NuvyTech (classes nv-). Arquivo gerado: não edite aqui.
+` +
+  `   Para mudar, edite layout/layout.css no nuvy-ui, rode "npm run gerar" e copie de novo.
+` +
+  `   Use junto com tokens-escuro.css (páginas sem JavaScript) ou tokens.css. */
+
+`;
 
 const HOVER_CSS = `/* Botão primário (e badge que é link) com o mouse em cima: a spartan clareia o fundo
    (hover:bg-primary/80), o que derruba o contraste do texto. Aqui ele vai na direção da cor do
@@ -151,6 +160,9 @@ export function gerarArquivos() {
     arquivos.set(`${marca}/tokens-escuro.css`, cabecalho(marca) + escuro);
     arquivos.set(`${marca}/tema.css`, cabecalho(marca) + tema);
   }
+  // Layout padrão (layout/layout.css): usa só variáveis do tema, então serve a qualquer marca.
+  const layout = readFileSync(join(RAIZ, 'layout', 'layout.css'), 'utf8');
+  for (const marca of Object.keys(marcas)) arquivos.set(`${marca}/layout.css`, cabecalhoLayout() + layout);
   arquivos.set('tokens.json', JSON.stringify(jsonTokens(), null, 2) + '\n');
   return arquivos;
 }
