@@ -1,0 +1,50 @@
+/* nuvy-ui 1.1.0 — tema NuvyTech, marca "nuvytech". Arquivo gerado: não edite aqui.
+   Para mudar, edite tokens.mjs no nuvy-ui, rode "npm run gerar" e copie de novo. */
+
+:root {
+  --radius: 0.625rem;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --marca: #007bff;
+  --marca-2: #00d2ff;
+  --gradiente-marca: linear-gradient(90deg, #007bff, #00d2ff);
+  color-scheme: dark;
+  --background: oklch(0.129 0.042 264.7); /* #020618 */
+  --foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --card: oklch(0.208 0.042 265.75); /* #0f172b */
+  --card-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --popover: oklch(0.208 0.042 265.75); /* #0f172b */
+  --popover-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --primary: oklch(0.7 0.15 252); /* #51a2f8 */
+  --primary-foreground: oklch(0.2 0.06 262); /* #061431 */
+  --secondary: oklch(0.279 0.041 260.03); /* #1d293d */
+  --secondary-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --muted: oklch(0.279 0.041 260.03); /* #1d293d */
+  --muted-foreground: oklch(0.8 0.04 256.79); /* #aebfd8 */
+  --accent: oklch(0.3 0.06 257); /* #192e4b */
+  --accent-foreground: oklch(0.93 0.03 257); /* #dbe9fc */
+  --destructive: oklch(0.79 0.119 22); /* #fe9b98 */
+  --destructive-foreground: oklch(0.2 0.06 20); /* #2c070a */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(0.6 0.04 257); /* #718198 */
+  --ring: oklch(0.66 0.17 255); /* #3f93f7 */
+  --chart-1: oklch(0.66 0.17 255); /* #3f93f7 */
+  --chart-2: oklch(0.75 0.12 195); /* #2cc5c5 */
+  --chart-3: oklch(0.8 0.15 75); /* #f5ae39 */
+  --chart-4: oklch(0.72 0.16 300); /* #b58bf9 */
+  --chart-5: oklch(0.72 0.17 15); /* #fc7182 */
+  --sidebar: oklch(0.208 0.042 265.75); /* #0f172b */
+  --sidebar-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --sidebar-primary: oklch(0.7 0.15 252); /* #51a2f8 */
+  --sidebar-primary-foreground: oklch(0.2 0.06 262); /* #061431 */
+  --sidebar-accent: oklch(0.3 0.06 257); /* #192e4b */
+  --sidebar-accent-foreground: oklch(0.93 0.03 257); /* #dbe9fc */
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.66 0.17 255); /* #3f93f7 */
+  --success: oklch(0.79 0.16 152); /* #5dd786 */
+  --success-foreground: oklch(0.2 0.049 155); /* #001c0c */
+  --warning: oklch(0.84 0.15 80); /* #fdbe45 */
+  --warning-foreground: oklch(0.25 0.058 60); /* #351a00 */
+  --info: oklch(0.78 0.12 230); /* #59c5f5 */
+  --info-foreground: oklch(0.22 0.046 235); /* #011e2d */
+}

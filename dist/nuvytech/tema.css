@@ -1,0 +1,137 @@
+/* nuvy-ui 1.1.0 — tema NuvyTech, marca "nuvytech". Arquivo gerado: não edite aqui.
+   Para mudar, edite tokens.mjs no nuvy-ui, rode "npm run gerar" e copie de novo. */
+
+:root {
+  --radius: 0.625rem;
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  --marca: #007bff;
+  --marca-2: #00d2ff;
+  --gradiente-marca: linear-gradient(90deg, #007bff, #00d2ff);
+  --background: oklch(1 0 0); /* #ffffff */
+  --foreground: oklch(0.129 0.042 264.7); /* #020618 */
+  --card: oklch(1 0 0); /* #ffffff */
+  --card-foreground: oklch(0.129 0.042 264.7); /* #020618 */
+  --popover: oklch(1 0 0); /* #ffffff */
+  --popover-foreground: oklch(0.129 0.042 264.7); /* #020618 */
+  --primary: oklch(0.513 0.182 256.95); /* #0062cc */
+  --primary-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+  --secondary: oklch(0.968 0.007 247.9); /* #f1f5f9 */
+  --secondary-foreground: oklch(0.208 0.042 265.75); /* #0f172b */
+  --muted: oklch(0.968 0.007 247.9); /* #f1f5f9 */
+  --muted-foreground: oklch(0.48 0.042 257.42); /* #4f5f76 */
+  --accent: oklch(0.962 0.018 256.76); /* #ebf3ff */
+  --accent-foreground: oklch(0.4 0.141 257); /* #014491 */
+  --destructive: oklch(0.505 0.19 27.5); /* #b91c1c */
+  --destructive-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+  --border: oklch(0.929 0.013 255.51); /* #e2e8f0 */
+  --input: oklch(0.64 0.035 256.8); /* #7f8da2 */
+  --ring: oklch(0.605 0.217 257.21); /* #007bff */
+  --chart-1: oklch(0.605 0.217 257.21); /* #007bff */
+  --chart-2: oklch(0.56 0.094 195); /* #068586 */
+  --chart-3: oklch(0.62 0.141 60); /* #c26e0f */
+  --chart-4: oklch(0.55 0.2 300); /* #864ad2 */
+  --chart-5: oklch(0.58 0.2 15); /* #d63053 */
+  --sidebar: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --sidebar-foreground: oklch(0.129 0.042 264.7); /* #020618 */
+  --sidebar-primary: oklch(0.513 0.182 256.95); /* #0062cc */
+  --sidebar-primary-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+  --sidebar-accent: oklch(0.962 0.018 256.76); /* #ebf3ff */
+  --sidebar-accent-foreground: oklch(0.4 0.141 257); /* #014491 */
+  --sidebar-border: oklch(0.929 0.013 255.51); /* #e2e8f0 */
+  --sidebar-ring: oklch(0.605 0.217 257.21); /* #007bff */
+  --success: oklch(0.48 0.12 150); /* #197037 */
+  --success-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+  --warning: oklch(0.5 0.116 60); /* #925002 */
+  --warning-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+  --info: oklch(0.47 0.092 230); /* #076484 */
+  --info-foreground: oklch(0.985 0.002 247.84); /* #f9fafb */
+}
+
+.dark {
+  --background: oklch(0.129 0.042 264.7); /* #020618 */
+  --foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --card: oklch(0.208 0.042 265.75); /* #0f172b */
+  --card-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --popover: oklch(0.208 0.042 265.75); /* #0f172b */
+  --popover-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --primary: oklch(0.7 0.15 252); /* #51a2f8 */
+  --primary-foreground: oklch(0.2 0.06 262); /* #061431 */
+  --secondary: oklch(0.279 0.041 260.03); /* #1d293d */
+  --secondary-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --muted: oklch(0.279 0.041 260.03); /* #1d293d */
+  --muted-foreground: oklch(0.8 0.04 256.79); /* #aebfd8 */
+  --accent: oklch(0.3 0.06 257); /* #192e4b */
+  --accent-foreground: oklch(0.93 0.03 257); /* #dbe9fc */
+  --destructive: oklch(0.79 0.119 22); /* #fe9b98 */
+  --destructive-foreground: oklch(0.2 0.06 20); /* #2c070a */
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(0.6 0.04 257); /* #718198 */
+  --ring: oklch(0.66 0.17 255); /* #3f93f7 */
+  --chart-1: oklch(0.66 0.17 255); /* #3f93f7 */
+  --chart-2: oklch(0.75 0.12 195); /* #2cc5c5 */
+  --chart-3: oklch(0.8 0.15 75); /* #f5ae39 */
+  --chart-4: oklch(0.72 0.16 300); /* #b58bf9 */
+  --chart-5: oklch(0.72 0.17 15); /* #fc7182 */
+  --sidebar: oklch(0.208 0.042 265.75); /* #0f172b */
+  --sidebar-foreground: oklch(0.984 0.003 247.86); /* #f8fafc */
+  --sidebar-primary: oklch(0.7 0.15 252); /* #51a2f8 */
+  --sidebar-primary-foreground: oklch(0.2 0.06 262); /* #061431 */
+  --sidebar-accent: oklch(0.3 0.06 257); /* #192e4b */
+  --sidebar-accent-foreground: oklch(0.93 0.03 257); /* #dbe9fc */
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.66 0.17 255); /* #3f93f7 */
+  --success: oklch(0.79 0.16 152); /* #5dd786 */
+  --success-foreground: oklch(0.2 0.049 155); /* #001c0c */
+  --warning: oklch(0.84 0.15 80); /* #fdbe45 */
+  --warning-foreground: oklch(0.25 0.058 60); /* #351a00 */
+  --info: oklch(0.78 0.12 230); /* #59c5f5 */
+  --info-foreground: oklch(0.22 0.046 235); /* #011e2d */
+}
+
+@theme inline {
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-marca: var(--marca);
+  --color-marca-2: var(--marca-2);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring; /* contorno de foco com a cor cheia (3:1); a spartan usa /50 */
+  }
+  html {
+    color-scheme: light;
+  }
+  html.dark {
+    color-scheme: dark;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  /* O preflight do Tailwind v4 deixa a seta nos botões; volta a mão. */
+  button:not(:disabled),
+  [role='button']:not([aria-disabled='true']) {
+    cursor: pointer;
+  }
+  /* A spartan só estiliza o botão desabilitado por data-disabled. Botões que usam aria-disabled
+     (para não perder o foco do teclado) ficam com a mesma aparência; o clique é barrado no handler. */
+  [data-slot='button'][aria-disabled='true'] {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+/* Botão primário (e badge que é link) com o mouse em cima: a spartan clareia o fundo
+   (hover:bg-primary/80), o que derruba o contraste do texto. Aqui ele vai na direção da cor do
+   texto da página: escurece no claro, clareia no escuro, e o contraste só aumenta. */
+@media (hover: hover) {
+  :is([data-slot='button'], a[data-slot='badge']).bg-primary:hover {
+    background-color: color-mix(in oklab, var(--primary) 85%, var(--foreground));
+  }
+}
