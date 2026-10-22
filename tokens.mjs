@@ -92,3 +92,21 @@ export const forma = {
   'font-sans': "'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif",
   'font-mono': "ui-monospace, 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace",
 };
+
+// Escalas que o layout padrão (layout/layout.css) e a spartan já usam, para documentação e para o Penpot.
+// Não geram CSS: o CSS continua sendo a fonte do que vale na tela.
+export const escalas = {
+  espacamento: { 1: '4px', 2: '8px', 3: '12px', 4: '16px', 5: '20px', 6: '24px', 8: '32px' },
+  raios: { controle: '8px', cartao: '14px', pilula: '999px' }, // controle = radius × 0,8; cartão = radius × 1,4
+  tamanhos: { controle: '44px', 'controle-pequeno': '36px', 'controle-grande': '50px', conteudo: '1120px' },
+  texto: {
+    titulo: { size: '30px', weight: '700', line: '1.2' },
+    subtitulo: { size: '20px', weight: '700', line: '1.3' },
+    secao: { size: '16px', weight: '650', line: '1.4' },
+    corpo: { size: '16px', weight: '400', line: '1.6' },
+    suave: { size: '14.5px', weight: '400', line: '1.55' },
+    rotulo: { size: '14.5px', weight: '600', line: '1.4' },
+    ajuda: { size: '13.5px', weight: '400', line: '1.5' },
+    selo: { size: '12.5px', weight: '600', line: '1.6' },
+  },
+};

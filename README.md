@@ -15,6 +15,7 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 | `npm test` | confere o contraste, se `dist/` está em dia, a cópia, o layout e o script do modo escuro |
 | `npm run copiar -- <pasta-do-projeto>` | grava `src/styles/nuvy-tema.css` no projeto |
 | `npm run previa` | monta `previa/tema-nuvytech.html` para ver as cores |
+| `npm run referencia` | monta `previa/referencia.html`: cores, componentes, estados, contraste e escalas nos dois modos |
 
 ## O que tem aqui
 
@@ -27,4 +28,6 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 - `modelos/layout-exemplo.html`: página de exemplo com todas as peças do layout, com dados fictícios.
 - `modelos/`: o script do modo escuro (`nuvy-tema.js`), o serviço Angular do botão de tema e o preparo dos testes Vitest (`preparo-testes.ts`, copiado como `src/test-setup.ts`).
 
-O passo a passo para cada tipo de projeto está em [docs/como-usar.md](docs/como-usar.md).
+- `dist/penpot/tokens.json`: os mesmos tokens no formato do Penpot (ver [docs/penpot.md](docs/penpot.md)).
+
+A referência visual (cores, tipografia, escalas, estados e componentes) está em [docs/referencia-visual.md](docs/referencia-visual.md). O passo a passo para cada tipo de projeto está em [docs/como-usar.md](docs/como-usar.md).
