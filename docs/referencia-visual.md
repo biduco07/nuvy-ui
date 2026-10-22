@@ -63,9 +63,11 @@ Números em tabelas usam `nv-num` (algarismos tabulares). Código usa `font-mono
 **Lacunas encontradas (para decidir, não corrigidas aqui):**
 1. Estado carregando no `layout.css` (proposta pronta na referência; pede mudança de `dist/` e de versão).
 2. Campo desabilitado e somente leitura não têm estilo próprio no `layout.css`; usam o do navegador.
-3. Diálogo, menu e abas só existem nos apps Angular (spartan) e não estão no `layout.css`.
+3. Diálogo, menu suspenso e abas só existem nos apps Angular (spartan) e não estão no `layout.css`. A coluna lateral de navegação já existe como variante do layout.
 
 ## Layout padrão `nv-`
+
+Variante com coluna lateral (marca, grupos, sub-itens, recolhível, gaveta no celular): [layout-lateral.md](layout-lateral.md), prévia em `previa/layout-lateral.html`.
 
 Tabela completa de classes em [como-usar.md](como-usar.md) (seção "Layout padrão"); exemplo com todas as peças em `modelos/layout-exemplo.html`. Nos apps Angular a spartan segue os mesmos tokens e o `layout.css` não entra: serve de referência visual.
 
@@ -83,6 +85,7 @@ Tabela completa de classes em [como-usar.md](como-usar.md) (seção "Layout padr
 | Cartão, indicador | `nv-cartao`, `nv-indicador` | `hlmCard` | painéis |
 | Tabela | `nv-tabela` | `hlmTable` | listas |
 | Cabeçalho | `nv-cabecalho`, `nv-marca`, `nv-nav` | navbar/sidebar | portal do site-factory, login |
+| Coluna lateral (variante) | `nv-pagina--lateral`, `nv-lateral`, `nv-lateral__link` | sidebar | proposta para o portal do site-factory |
 
 Quem usa o quê, segundo o [como-usar.md](como-usar.md) e a spec:
 - **Angular + spartan** (copiam `tema.css`): CRMSystem, ProjetoDesaparecidos, iddle-app, GerenciamentoCliente, nuvydoc.

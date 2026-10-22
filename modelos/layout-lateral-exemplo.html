@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout com coluna lateral — exemplo</title>
+  <!-- Em um projeto, copie dist/nuvytech/tokens-escuro.css, dist/nuvytech/layout.css e modelos/nuvy-lateral.js.
+       Sem o nuvy-lateral.js a coluna aparece inteira (no alto da página no celular): serve de plano B. -->
+  <link rel="stylesheet" href="../dist/nuvytech/tokens-escuro.css">
+  <link rel="stylesheet" href="../dist/nuvytech/layout.css">
+</head>
+<body class="nv-pagina nv-pagina--lateral">
+  <a class="nv-pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="nv-app">
+    <aside class="nv-lateral" id="nv-lateral" aria-label="Menu lateral">
+      <div class="nv-lateral__topo">
+        <a class="nv-marca" href="#">
+          <svg class="nv-marca__logo" viewBox="0 0 30 30" aria-hidden="true">
+            <circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="3"/>
+            <circle cx="15" cy="15" r="5" fill="currentColor"/>
+          </svg>
+          <span>NuvyTech<span class="nv-marca__sub">Portal do cliente</span></span>
+        </a>
+        <!-- Os dois botões ficam ocultos até o nuvy-lateral.js rodar. -->
+        <button class="nv-lateral__botao nv-lateral__botao--recolher" type="button" data-nv-recolher aria-expanded="true" aria-label="Recolher o menu" aria-controls="nv-lateral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+        </button>
+        <button class="nv-lateral__botao nv-lateral__botao--fechar" type="button" data-nv-fechar aria-label="Fechar o menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <nav class="nv-lateral__nav" aria-label="Principal">
+        <div>
+          <p class="nv-lateral__grupo" id="g-projeto">Meu projeto</p>
+          <ul class="nv-lateral__lista" aria-labelledby="g-projeto">
+            <li>
+              <a class="nv-lateral__link" href="#" aria-current="page">
+                <svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+                <span class="nv-lateral__texto">Meus projetos</span>
+              </a>
+            </li>
+            <li>
+              <a class="nv-lateral__link" href="#">
+                <svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h8"/></svg>
+                <span class="nv-lateral__texto">Briefings</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div>
+          <p class="nv-lateral__grupo" id="g-aviso">Acompanhamento</p>
+          <ul class="nv-lateral__lista" aria-labelledby="g-aviso">
+            <li>
+              <a class="nv-lateral__link" href="#">
+                <svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg>
+                <span class="nv-lateral__texto">Avisos</span>
+                <span class="nv-lateral__contagem" aria-label="3 não lidos">3</span>
+              </a>
+              <!-- Sub-itens (abas e submenus da página): só sob o item atual. -->
+              <ul class="nv-lateral__sub">
+                <li><a class="nv-lateral__link" href="#"><span class="nv-lateral__texto">Todos</span></a></li>
+                <li><a class="nv-lateral__link" href="#"><span class="nv-lateral__texto">Não lidos</span></a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <div class="nv-lateral__conta">
+        <span class="nv-conta__nome">Maria Silva</span>
+        <span class="nv-conta__papel">Cliente</span>
+        <form action="#" method="post">
+          <button class="nv-botao nv-botao--secundario nv-botao--pequeno nv-botao--total" type="submit">
+            <svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            <span class="nv-lateral__texto">Sair</span>
+          </button>
+        </form>
+      </div>
+    </aside>
+    <div class="nv-lateral__fundo" data-nv-fechar></div>
+
+    <div class="nv-lateral-corpo">
+      <div class="nv-barra-topo">
+        <button class="nv-lateral__botao" type="button" data-nv-abrir aria-expanded="false" aria-controls="nv-lateral" aria-label="Abrir o menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <span class="nv-marca">NuvyTech</span>
+      </div>
+
+      <main class="nv-principal" id="conteudo">
+        <div class="nv-titulo-pagina">
+          <h1>Meus projetos</h1>
+        </div>
+        <section class="nv-cartao">
+          <h2>Site da Padaria Modelo</h2>
+          <p class="nv-texto-suave">Em construção, 65% concluído.</p>
+        </section>
+        <footer class="nv-rodape">Dados fictícios, só para demonstrar o layout.</footer>
+      </main>
+    </div>
+  </div>
+
+  <script src="nuvy-lateral.js"></script>
+</body>
+</html>
