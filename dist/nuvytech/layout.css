@@ -775,3 +775,293 @@
     padding: 10px 12px;
   }
 }
+
+/* Variante com coluna lateral (nv-pagina--lateral): no lugar do cabeçalho no topo, uma coluna com marca,
+   grupos de links com título, item atual, sub-itens e conta/sair embaixo. O cabeçalho no topo continua
+   sendo o padrão; esta variante só vale quando o <body> leva nv-pagina--lateral.
+   Sem JavaScript: a coluna aparece inteira, no alto da página no celular. Com nuvy-lateral.js (que põe
+   a classe nv-js no <html>): recolhe no desktop (data-lateral="recolhida") e vira gaveta no celular
+   (data-lateral-aberta). Cores: só tokens sidebar/accent, que já têm contraste conferido. */
+.nv-pagina--lateral {
+  --nv-lateral-largura: 264px;
+  --nv-lateral-recolhida: 68px;
+}
+.nv-app {
+  display: block;
+}
+.nv-lateral {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background: var(--sidebar);
+  color: var(--sidebar-foreground);
+  border-bottom: 1px solid var(--sidebar-border);
+}
+.nv-lateral__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 52px;
+  padding: 0 4px;
+}
+.nv-lateral__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 4px 0;
+}
+.nv-lateral__grupo {
+  margin: 0 0 4px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+.nv-lateral__lista,
+.nv-lateral__sub {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.nv-lateral__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nv-lateral__sub {
+  margin: 2px 0 4px 22px;
+  padding-left: 10px;
+  border-left: 1px solid var(--sidebar-border);
+}
+.nv-lateral__link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: var(--nv-controle);
+  padding: 8px 12px;
+  border-radius: var(--nv-raio-controle);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-decoration: none;
+}
+.nv-pagina .nv-lateral__link {
+  color: var(--muted-foreground);
+}
+.nv-lateral__sub .nv-lateral__link {
+  min-height: 36px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+.nv-pagina .nv-lateral__link:hover {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.nv-pagina .nv-lateral__link[aria-current='page'] {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+  font-weight: 600;
+  box-shadow: inset 3px 0 0 var(--marca-2);
+}
+.nv-pagina .nv-lateral__link:focus-visible {
+  border-radius: var(--nv-raio-controle);
+  box-shadow: var(--nv-foco);
+}
+.nv-lateral__icone {
+  width: 20px;
+  height: 20px;
+  flex: none;
+}
+.nv-lateral__texto {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.nv-lateral__contagem {
+  flex: none;
+  min-width: 22px;
+  padding: 0 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  text-align: center;
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+.nv-lateral__conta {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px 8px 4px;
+  border-top: 1px solid var(--sidebar-border);
+  font-size: 14px;
+  color: var(--muted-foreground);
+}
+.nv-lateral__conta .nv-conta__nome {
+  color: var(--sidebar-foreground);
+  font-weight: 600;
+}
+.nv-lateral__conta .nv-conta__papel {
+  align-self: flex-start;
+}
+.nv-lateral__conta form {
+  margin: 0;
+}
+.nv-lateral__botao {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--nv-controle);
+  height: var(--nv-controle);
+  flex: none;
+  padding: 0;
+  border: 1px solid var(--input);
+  border-radius: var(--nv-raio-controle);
+  background: transparent;
+  color: var(--sidebar-foreground);
+  font: inherit;
+  cursor: pointer;
+}
+.nv-pagina .nv-lateral__botao:hover {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+.nv-lateral__botao svg {
+  width: 20px;
+  height: 20px;
+}
+.nv-lateral__fundo {
+  display: none;
+}
+.nv-barra-topo {
+  display: none;
+}
+.nv-lateral-corpo {
+  min-width: 0;
+}
+
+/* Desktop: coluna fixa à esquerda */
+@media (min-width: 721px) {
+  .nv-pagina--lateral .nv-app {
+    display: grid;
+    grid-template-columns: var(--nv-lateral-largura) minmax(0, 1fr);
+    min-height: 100vh;
+  }
+  .nv-pagina--lateral .nv-lateral {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    border-bottom: 0;
+    border-right: 1px solid var(--sidebar-border);
+  }
+  .nv-pagina--lateral .nv-lateral__nav {
+    overflow-y: auto;
+  }
+  .nv-js .nv-lateral__botao--recolher {
+    display: inline-flex;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-app {
+    grid-template-columns: var(--nv-lateral-recolhida) minmax(0, 1fr);
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral {
+    padding-inline: 10px;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__topo {
+    flex-direction: column;
+    justify-content: center;
+    padding: 8px 0;
+  }
+  /* Recolhida: os textos saem da tela mas continuam para leitor de tela. */
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-marca > span,
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__texto,
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__grupo,
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__conta .nv-conta__nome,
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__conta .nv-conta__papel {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__sub {
+    display: none;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__link,
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__conta .nv-botao {
+    justify-content: center;
+    padding-inline: 0;
+    position: relative;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__contagem {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    min-width: 18px;
+    padding: 0 4px;
+    font-size: 11px;
+    line-height: 16px;
+  }
+  .nv-pagina--lateral[data-lateral='recolhida'] .nv-lateral__botao--recolher svg {
+    transform: scaleX(-1);
+  }
+}
+
+/* Celular: a coluna vira gaveta aberta pelo botão de menu */
+@media (max-width: 720px) {
+  .nv-js .nv-barra-topo {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 16px;
+    background: var(--sidebar);
+    border-bottom: 1px solid var(--sidebar-border);
+  }
+  .nv-js .nv-barra-topo .nv-lateral__botao,
+  .nv-js .nv-lateral__botao--fechar {
+    display: inline-flex;
+  }
+  .nv-js .nv-lateral {
+    position: fixed;
+    inset: 0 auto 0 0;
+    z-index: 20;
+    width: min(86vw, 320px);
+    border-bottom: 0;
+    border-right: 1px solid var(--sidebar-border);
+    transform: translateX(-100%);
+    visibility: hidden;
+    transition: transform 0.2s ease, visibility 0s linear 0.2s;
+  }
+  .nv-js .nv-lateral__nav {
+    overflow-y: auto;
+  }
+  .nv-js .nv-pagina--lateral[data-lateral-aberta] .nv-lateral {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.2s ease;
+  }
+  .nv-js .nv-pagina--lateral[data-lateral-aberta] .nv-lateral__fundo {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: color-mix(in oklab, var(--background) 70%, transparent);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nv-js .nv-lateral {
+    transition: none;
+  }
+}

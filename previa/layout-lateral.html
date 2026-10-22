@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Layout com coluna lateral — prévia</title>
+  <!-- Prévia da variante nv-pagina--lateral com a navegação de exemplo do portal do site-factory.
+       Parâmetros: ?papel=cliente|vendedor|socio  &tema=claro|escuro  &recolhida=1  &aberta=1 (gaveta no celular)  -->
+  <link rel="stylesheet" href="../dist/nuvytech/tokens.css">
+  <link rel="stylesheet" href="../dist/nuvytech/layout.css">
+  <script>
+    (function () {
+      var q = new URLSearchParams(location.search);
+      var claro = q.get('tema') === 'claro';
+      document.documentElement.classList.toggle('dark', !claro);
+      document.documentElement.style.colorScheme = claro ? 'light' : 'dark';
+      if (q.get('recolhida') === '1') { try { localStorage.setItem('nuvy-lateral', 'recolhida'); } catch (e) {} }
+      else { try { localStorage.removeItem('nuvy-lateral'); } catch (e) {} }
+    })();
+  </script>
+</head>
+<body class="nv-pagina nv-pagina--lateral">
+  <a class="nv-pular" href="#conteudo">Pular para o conteúdo</a>
+
+  <div class="nv-app">
+    <aside class="nv-lateral" id="nv-lateral" aria-label="Menu lateral">
+      <div class="nv-lateral__topo">
+        <a class="nv-marca" href="#">
+          <svg class="nv-marca__logo" viewBox="0 0 30 30" aria-hidden="true">
+            <circle cx="15" cy="15" r="13" fill="none" stroke="currentColor" stroke-width="3"/>
+            <circle cx="15" cy="15" r="5" fill="currentColor"/>
+          </svg>
+          <span>NuvyTech<span class="nv-marca__sub" id="area">Portal do cliente</span></span>
+        </a>
+        <button class="nv-lateral__botao nv-lateral__botao--recolher" type="button" data-nv-recolher aria-expanded="true" aria-label="Recolher o menu" aria-controls="nv-lateral">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 6-6 6 6 6"/></svg>
+        </button>
+        <button class="nv-lateral__botao nv-lateral__botao--fechar" type="button" data-nv-fechar aria-label="Fechar o menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+        </button>
+      </div>
+
+      <nav class="nv-lateral__nav" id="nav" aria-label="Principal"></nav>
+
+      <div class="nv-lateral__conta">
+        <span class="nv-conta__nome" id="nome">Maria Silva</span>
+        <span class="nv-conta__papel" id="papel">Cliente</span>
+        <form action="#" onsubmit="return false">
+          <button class="nv-botao nv-botao--secundario nv-botao--pequeno nv-botao--total" type="submit">
+            <svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+            <span class="nv-lateral__texto">Sair</span>
+          </button>
+        </form>
+      </div>
+    </aside>
+    <div class="nv-lateral__fundo" data-nv-fechar></div>
+
+    <div class="nv-lateral-corpo">
+      <div class="nv-barra-topo">
+        <button class="nv-lateral__botao" type="button" data-nv-abrir aria-expanded="false" aria-controls="nv-lateral" aria-label="Abrir o menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <span class="nv-marca">NuvyTech</span>
+      </div>
+
+      <main class="nv-principal" id="conteudo">
+        <div class="nv-titulo-pagina">
+          <h1 id="titulo">Meus projetos</h1>
+          <div class="nv-acoes">
+            <a class="nv-botao nv-botao--secundario" href="#">Exportar</a>
+            <button class="nv-botao" type="button">Novo pedido</button>
+          </div>
+        </div>
+
+        <div class="nv-aviso nv-aviso--atencao">Há 2 pendências aguardando a sua resposta.</div>
+
+        <div class="nv-indicadores">
+          <div class="nv-indicador"><span class="nv-indicador__valor">3</span><span class="nv-indicador__nome">Projetos ativos</span></div>
+          <div class="nv-indicador"><span class="nv-indicador__valor">65%</span><span class="nv-indicador__nome">Andamento médio</span></div>
+          <div class="nv-indicador"><span class="nv-indicador__valor">2</span><span class="nv-indicador__nome">Pendências</span></div>
+          <div class="nv-indicador nv-indicador--atencao"><span class="nv-indicador__valor">1</span><span class="nv-indicador__nome">Pagamento em atraso</span></div>
+        </div>
+
+        <section class="nv-cartao">
+          <h2>Projetos</h2>
+          <div class="nv-tabela-caixa">
+            <table class="nv-tabela">
+              <thead><tr><th>Projeto</th><th>Situação</th><th class="nv-num">Andamento</th></tr></thead>
+              <tbody>
+                <tr><td>Site da Padaria Modelo</td><td><span class="nv-selo nv-selo--info">Em construção</span></td><td class="nv-num">65%</td></tr>
+                <tr><td>Loja da Oficina Fictícia</td><td><span class="nv-selo nv-selo--sucesso">No ar</span></td><td class="nv-num">100%</td></tr>
+                <tr><td>Página da Clínica de Exemplo</td><td><span class="nv-selo nv-selo--atencao">Aguardando briefing</span></td><td class="nv-num">10%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <footer class="nv-rodape">Dados fictícios, só para demonstrar o layout. Navegação de exemplo do portal do site-factory.</footer>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    /* Navegação de exemplo: cada papel vê só os próprios itens. Em produção o servidor gera este HTML. */
+    var I = {
+      pasta: 'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',
+      sino: 'M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0',
+      arquivo: 'M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h8',
+      alerta: 'M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0',
+      cartao: 'M3 6h18v12H3zM3 10h18',
+      presente: 'M20 12v9H4v-9M2 7h20v5H2zM12 22V7M12 7H7.5a2.5 2.5 0 1 1 0-5C11 2 12 7 12 7zM12 7h4.5a2.5 2.5 0 1 0 0-5C13 2 12 7 12 7z',
+      msg: 'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',
+      ajuda: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01',
+      ferram: 'M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z',
+      escudo: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+      info: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01',
+      grafico: 'M3 3v18h18M7 15l4-4 3 3 5-6',
+      casa: 'M3 11 12 3l9 8M5 10v10h14V10',
+      pessoas: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',
+      funil: 'M3 4h18l-7 8v6l-4 2v-8z',
+      moeda: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM15 9.5c-.5-1-1.600-1.500-3-1.500-1.700 0-3 .8-3 2s1.300 1.700 3 2 3 .8 3 2-1.300 2-3 2c-1.400 0-2.500-.5-3-1.500M12 6v2M12 16v2',
+      cal: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
+      lista: 'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01',
+      carteira: 'M3 7a2 2 0 0 1 2-2h14v4M3 7v12a2 2 0 0 0 2 2h16V9H5a2 2 0 0 1-2-2zM17 15h.01'
+    };
+    var P = {
+      cliente: {
+        area: 'Portal do cliente', papel: 'Cliente', ativo: 'Meus projetos',
+        grupos: [
+          ['Meu projeto', [['Meus projetos', 'pasta'], ['Briefings', 'arquivo'], ['Pendências', 'alerta']]],
+          ['Acompanhamento', [['Avisos', 'sino', 3], ['Mensagens', 'msg'], ['Suporte', 'ajuda'], ['Manutenção', 'ferram']]],
+          ['Financeiro', [['Pagamentos', 'cartao'], ['Meus meses grátis', 'presente']]],
+          ['Conta', [['Segurança', 'escudo'], ['Meus dados', 'pessoas'], ['Sobre a NuvyTech', 'info']]]
+        ],
+        sub: {}
+      },
+      vendedor: {
+        area: 'Área de vendas', papel: 'Vendedor', ativo: 'Minha carteira',
+        grupos: [
+          ['Vendas', [['Minha carteira', 'carteira'], ['Tarefas', 'lista'], ['Indicadores', 'grafico'], ['Relatórios', 'arquivo']]],
+          ['Comunicação', [['Avisos', 'sino', 2], ['Mensagens', 'msg']]],
+          ['Ajuda e conta', [['Como funciona', 'ajuda'], ['Segurança', 'escudo']]]
+        ],
+        sub: {}
+      },
+      socio: {
+        area: 'Área dos sócios', papel: 'Sócio', ativo: 'Leads',
+        grupos: [
+          ['Visão geral', [['Painel', 'casa'], ['Visão executiva', 'grafico']]],
+          ['Comercial', [['Leads', 'funil']]],
+          ['Vendas', [['Vendas e comissões', 'moeda']]],
+          ['Operação', [['Suporte', 'ajuda'], ['Manutenção', 'ferram'], ['Calendário', 'cal']]],
+          ['Financeiro', [['Financeiro', 'cartao'], ['Relatórios', 'arquivo']]],
+          ['Comunicação e conta', [['Avisos', 'sino', 4], ['Mensagens', 'msg'], ['Segurança', 'escudo']]]
+        ],
+        /* Abas (routedTabs) e submenus viram sub-itens; só aparecem sob o item atual. */
+        sub: { 'Leads': ['Leads', 'Acompanhamentos', 'Fila de trabalho', 'Indicadores', 'Prospecção', 'Oportunidades a completar', 'Buscas salvas'] }
+      }
+    };
+    var q = new URLSearchParams(location.search);
+    var d = P[q.get('papel')] || P.cliente;
+    var ativo = q.get('ativo') || d.ativo;
+    var subAtivo = q.get('sub') || 'Leads';
+    var h = '';
+    d.grupos.forEach(function (g, n) {
+      h += '<div><p class="nv-lateral__grupo" id="g' + n + '">' + g[0] + '</p><ul class="nv-lateral__lista" aria-labelledby="g' + n + '">';
+      g[1].forEach(function (it) {
+        var atual = it[0] === ativo;
+        h += '<li><a class="nv-lateral__link" href="#"' + (atual && !(d.sub[it[0]]) ? ' aria-current="page"' : '') + '>' +
+          '<svg class="nv-lateral__icone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + I[it[1]] + '"/></svg>' +
+          '<span class="nv-lateral__texto">' + it[0] + '</span>' +
+          (it[2] ? '<span class="nv-lateral__contagem" aria-label="' + it[2] + ' não lidos">' + it[2] + '</span>' : '') + '</a>';
+        if (atual && d.sub[it[0]]) {
+          h += '<ul class="nv-lateral__sub">';
+          d.sub[it[0]].forEach(function (s) {
+            h += '<li><a class="nv-lateral__link" href="#"' + (s === subAtivo ? ' aria-current="page"' : '') + '><span class="nv-lateral__texto">' + s + '</span></a></li>';
+          });
+          h += '</ul>';
+        }
+        h += '</li>';
+      });
+      h += '</ul></div>';
+    });
+    document.getElementById('nav').innerHTML = h;
+    document.getElementById('area').textContent = d.area;
+    document.getElementById('papel').textContent = d.papel;
+    document.getElementById('titulo').textContent = d.sub[ativo] ? subAtivo : ativo;
+  </script>
+  <script src="../modelos/nuvy-lateral.js"></script>
+  <script>if (q.get('aberta') === '1') document.body.setAttribute('data-lateral-aberta', '');</script>
+</body>
+</html>

@@ -3,7 +3,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rgbParaHex, rgbParaOklch } from './cor.mjs';
-import { comum, marcas, graficos, forma } from '../tokens.mjs';
+import { comum, marcas, graficos, forma, escalas } from '../tokens.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
 const VERSAO = '1.2.0';
@@ -35,7 +35,7 @@ export function completo(marca, modo) {
     'sidebar-ring': t.ring,
   };
 }
-function bloco(seletor, t, extra = {}) {
+export function bloco(seletor, t, extra = {}) {
   // color-scheme é propriedade de verdade (liga o escuro dos controles nativos); o resto vira variável.
   const linhas = Object.entries(extra).map(([k, v]) => (k === 'color-scheme' ? `  color-scheme: ${v};` : `  --${k}: ${v};`));
   for (const k of ORDEM) {
@@ -151,6 +151,43 @@ export function cssPrevia() {
     bloco(':root[data-theme="light"]', completo('nuvytech', 'claro'), { 'color-scheme': 'light' });
 }
 
+// Tokens para importar no Penpot (Tokens > Tools > Import): $value/$type/$description, um conjunto por
+// modo e temas Claro/Escuro. O Penpot lê cores em hex/rgb/hsl (não oklch), então vai o hex já calculado;
+// a borda do escuro (branco a 10%) vira rgba.
+export function jsonPenpot() {
+  const m = marcas.nuvytech;
+  const tok = (v, tipo, d = '') => ({ $value: String(v), $type: tipo, $description: d });
+  const paraPenpot = (h) => {
+    const a = /^oklch\(1 0 0 \/ (\d+)%\)$/.exec(h);
+    return a ? `rgba(255, 255, 255, ${Number(a[1]) / 100})` : h;
+  };
+  const tokens = jsonTokens().marcas.nuvytech;
+  const cores = (modo) => Object.fromEntries(Object.entries(tokens[modo]).map(([k, v]) => [k, tok(paraPenpot(v.hex), 'color')]));
+  const grupo = (obj, tipo) => Object.fromEntries(Object.entries(obj).map(([k, v]) => [k, tok(v, tipo)]));
+  const global = {
+    marca: { azul: tok(m.marca, 'color', 'Cor do logo. Só decoração e destaques grandes.'), ciano: tok(m['marca-2'], 'color', 'Fim do gradiente do logo.') },
+    espacamento: grupo(escalas.espacamento, 'spacing'),
+    raio: grupo(escalas.raios, 'borderRadius'),
+    tamanho: grupo(escalas.tamanhos, 'sizing'),
+    fonte: { sans: tok('Inter', 'fontFamilies'), mono: tok('Consolas', 'fontFamilies') },
+    texto: Object.fromEntries(Object.entries(escalas.texto).flatMap(([k, t]) => [
+      [`${k}-tamanho`, tok(t.size.replace('px', ''), 'fontSizes')],
+      [`${k}-peso`, tok(t.weight, 'fontWeights')],
+    ])),
+  };
+  const ids = { Claro: 'a1f0c3de-0001-4a00-8000-6e7579000001', Escuro: 'a1f0c3de-0002-4a00-8000-6e7579000002' };
+  return {
+    Global: global,
+    'Cor/Claro': cores('claro'),
+    'Cor/Escuro': cores('escuro'),
+    $themes: ['Claro', 'Escuro'].map((n) => ({
+      id: ids[n], name: n, group: 'Modo', description: '', isSource: false,
+      selectedTokenSets: { Global: 'enabled', [`Cor/${n}`]: 'enabled' },
+    })),
+    $metadata: { tokenSetOrder: ['Global', 'Cor/Claro', 'Cor/Escuro'], activeThemes: ['Modo/Escuro'], activeSets: ['Global', 'Cor/Escuro'] },
+  };
+}
+
 // Todos os arquivos de dist/: caminho relativo -> conteúdo.
 export function gerarArquivos() {
   const arquivos = new Map();
@@ -163,6 +200,7 @@ export function gerarArquivos() {
   // Layout padrão (layout/layout.css): usa só variáveis do tema, então serve a qualquer marca.
   const layout = readFileSync(join(RAIZ, 'layout', 'layout.css'), 'utf8');
   for (const marca of Object.keys(marcas)) arquivos.set(`${marca}/layout.css`, cabecalhoLayout() + layout);
+  arquivos.set('penpot/tokens.json', JSON.stringify(jsonPenpot(), null, 2) + '\n');
   arquivos.set('tokens.json', JSON.stringify(jsonTokens(), null, 2) + '\n');
   return arquivos;
 }

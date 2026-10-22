@@ -11,6 +11,7 @@
     "gerar": "node scripts/gerar.mjs",
     "test": "node --test",
     "copiar": "node scripts/copiar.mjs",
-    "previa": "node scripts/previa.mjs"
+    "previa": "node scripts/previa.mjs",
+    "referencia": "node scripts/referencia.mjs"
   }
 }
