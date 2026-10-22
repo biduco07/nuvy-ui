@@ -26,6 +26,7 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 - `dist/nuvytech/layout.css`: o layout padrão (classes `nv-`) para páginas sem spartan. Fonte em `layout/layout.css`; use junto com `tokens-escuro.css` ou `tokens.css`.
 - `dist/tokens.json`: todos os valores em OKLCH e hex.
 - `modelos/layout-exemplo.html`: página de exemplo com todas as peças do layout, com dados fictícios.
+- `modelos/layout-lateral-exemplo.html` e `modelos/nuvy-lateral.js`: variante com coluna lateral (recolhível, gaveta no celular); ver [docs/layout-lateral.md](docs/layout-lateral.md). Prévia: `previa/layout-lateral.html`.
 - `modelos/`: o script do modo escuro (`nuvy-tema.js`), o serviço Angular do botão de tema e o preparo dos testes Vitest (`preparo-testes.ts`, copiado como `src/test-setup.ts`).
 
 - `dist/penpot/tokens.json`: os mesmos tokens no formato do Penpot (ver [docs/penpot.md](docs/penpot.md)).

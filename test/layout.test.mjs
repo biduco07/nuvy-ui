@@ -47,8 +47,8 @@ test('tem estilo de :focus-visible e só usa variáveis que o tema define', () =
   assert.deepEqual(faltando, []);
 });
 
-test('o modelo layout-exemplo.html usa só classes que existem no layout', () => {
-  const html = lerArq('modelos/layout-exemplo.html');
+for (const modelo of ['layout-exemplo.html', 'layout-lateral-exemplo.html']) test(`o modelo ${modelo} usa só classes que existem no layout`, () => {
+  const html = lerArq(`modelos/${modelo}`);
   assert.match(html, /dist\/nuvytech\/tokens-escuro\.css/);
   assert.match(html, /dist\/nuvytech\/layout\.css/);
   const existentes = new Set([...limpo().matchAll(/\.(nv-[\w-]+)/g)].map((m) => m[1]));
