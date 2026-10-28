@@ -6,7 +6,7 @@ import { rgbParaHex, rgbParaOklch } from './cor.mjs';
 import { comum, marcas, graficos, forma, escalas } from '../tokens.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.2.0';
+const VERSAO = '1.3.0';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {
