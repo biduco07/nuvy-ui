@@ -20,7 +20,7 @@ test('copia o tema para src/styles/nuvy-tema.css de um projeto novo', () => {
   assert.equal(r.destino, join(pasta, 'src', 'styles', 'nuvy-tema.css'));
   assert.equal(readFileSync(r.destino, 'utf8'), tema);
   assert.equal(r.versaoAntiga, null);
-  assert.equal(r.versaoNova, '1.2.0');
+  assert.equal(r.versaoNova, '1.3.0');
 });
 
 test('ao copiar por cima, informa a versão que estava lá', () => {

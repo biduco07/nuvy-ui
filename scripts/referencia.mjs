@@ -144,7 +144,7 @@ details{margin:12px 0}summary{cursor:pointer;font-weight:600}
 @media (prefers-reduced-motion:reduce){.nv-pagina .nv-botao.s-carregando::before{animation:none}}
 </style></head><body>
 <header class="topo"><h1>Referência visual NuvyTech</h1>
-<p>Gerada de <code>tokens.mjs</code> e <code>layout/layout.css</code> (nuvy-ui 1.2.0). Tudo abaixo é o CSS real do repositório; só os estados hover e foco são forçados para aparecerem lado a lado.</p></header>
+<p>Gerada de <code>tokens.mjs</code> e <code>layout/layout.css</code> (nuvy-ui 1.3.0). Tudo abaixo é o CSS real do repositório; só os estados hover e foco são forçados para aparecerem lado a lado.</p></header>
 <main class="corpo">
 ${painel('escuro', tokens)}
 ${painel('claro', tokens)}
