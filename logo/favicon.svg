@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="techGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#007bff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#00d2ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <g transform="translate(6, 12)">
+    <path d="M70,20 A30,30 0 0,1 100,50 A20,20 0 0,1 120,70 A20,20 0 0,1 100,90 L40,90 A30,30 0 0,1 40,30 A20,20 0 0,1 70,20 Z" 
+          fill="none" stroke="url(#techGradient)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <circle cx="50" cy="50" r="6" fill="#007bff" />
+    <circle cx="80" cy="40" r="6" fill="#00aaff" />
+    <circle cx="100" cy="70" r="6" fill="#00d2ff" />
+    
+    <path d="M50,50 L80,50 L80,40" fill="none" stroke="#007bff" stroke-width="5" />
+    <path d="M80,50 L100,70" fill="none" stroke="#00aaff" stroke-width="5" />
+  </g>
+</svg>
