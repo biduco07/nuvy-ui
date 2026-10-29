@@ -24,6 +24,7 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 - `dist/nuvytech/tokens.css`: só as variáveis, com o claro no `:root` e o escuro em `.dark`.
 - `dist/nuvytech/tokens-escuro.css`: só o escuro, para páginas sem JavaScript (portal, Keycloak).
 - `dist/nuvytech/layout.css`: o layout padrão (classes `nv-`) para páginas sem spartan. Fonte em `layout/layout.css`; use junto com `tokens-escuro.css` ou `tokens.css`.
+- `dist/nuvytech/logo.svg`, `logo-escuro.svg` e `favicon.svg`: a logo oficial (ver a seção Logo). Fonte em `logo/`.
 - `dist/tokens.json`: todos os valores em OKLCH e hex.
 - `modelos/layout-exemplo.html`: página de exemplo com todas as peças do layout, com dados fictícios.
 - `modelos/layout-lateral-exemplo.html` e `modelos/nuvy-lateral.js`: variante com coluna lateral (recolhível, gaveta no celular); ver [docs/layout-lateral.md](docs/layout-lateral.md). Prévia: `previa/layout-lateral.html`.
@@ -32,3 +33,22 @@ Não há dependências npm. Precisa de Node 22 ou mais novo.
 - `dist/penpot/tokens.json`: os mesmos tokens no formato do Penpot (ver [docs/penpot.md](docs/penpot.md)).
 
 A referência visual (cores, tipografia, escalas, estados e componentes) está em [docs/referencia-visual.md](docs/referencia-visual.md). O passo a passo para cada tipo de projeto está em [docs/como-usar.md](docs/como-usar.md).
+
+## Logo
+
+A logo oficial da NuvyTech (a mesma do site nuvytech.com.br) fica em `logo/` e é publicada em `dist/nuvytech/`:
+
+| Arquivo | Uso |
+|---|---|
+| `logo.svg` | fundo claro (texto escuro) |
+| `logo-escuro.svg` | fundo escuro (texto claro); **os apps são tema escuro, use este** |
+| `favicon.svg` | ícone da aba do navegador |
+
+Num app, o caminho no pacote é `nuvy-ui/dist/nuvytech/logo-escuro.svg`. Copie o arquivo para os assets do app (ou aponte o build para essa pasta) e use:
+
+```html
+<img src="assets/nuvytech/logo-escuro.svg" alt="NuvyTech" width="184" height="48" />
+<link rel="icon" type="image/svg+xml" href="assets/nuvytech/favicon.svg" />
+```
+
+Para trocar a logo, edite os arquivos de `logo/` e rode `npm run gerar`; `npm test` falha se o `dist/` ficar desatualizado.
