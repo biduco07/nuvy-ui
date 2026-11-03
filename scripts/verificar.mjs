@@ -63,6 +63,9 @@ export function pares(t, modo) {
   txt('foreground / muted (linha selecionada)', c('foreground'), c('muted'));
   txt('destructive-foreground / destructive', c('destructive-foreground'), c('destructive'));
   for (const s of ['success', 'warning', 'info']) txt(`${s}-foreground / ${s}`, c(`${s}-foreground`), c(s));
+  txt('destructive / destructive/12 sobre card (botão de ícone de perigo com o mouse)', c('destructive'), sobre(c('destructive'), 0.12, card));
+  txt('primary / accent (botão de ícone com o mouse)', c('primary'), c('accent'));
+  txt('background / foreground (dica do botão de ícone)', c('background'), c('foreground'));
   txt('sidebar-foreground / sidebar', c('sidebar-foreground'), c('sidebar'));
   txt('accent-foreground / accent (menu lateral)', c('accent-foreground'), c('accent'));
   txt('muted-foreground / sidebar', c('muted-foreground'), c('sidebar'));

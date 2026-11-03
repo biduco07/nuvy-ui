@@ -5,6 +5,7 @@ import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { RAIZ, bloco, completo, jsonTokens, relatorio } from './gerar.mjs';
 import { escalas, forma, marcas } from '../tokens.mjs';
+import { ICONES, spriteIcones } from '../layout/icones.mjs';
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 const m = marcas.nuvytech;
@@ -23,6 +24,7 @@ export const RELACAO = [
   ['Cartão', 'nv-cartao (--destaque, --atencao)', 'hlmCard', 'Painéis, resumo de cliente'],
   ['Indicador', 'nv-indicador', 'hlmCard com número', 'Painel inicial (totais, pendências)'],
   ['Tabela', 'nv-tabela-caixa + nv-tabela', 'hlmTable', 'Listas de clientes, notas, cobranças'],
+  ['Ação em tabela (ícone)', 'nv-acoes-col + nv-botao--icone', 'hlmBtn variant="ghost" size="icon"', 'Coluna Ações, última da tabela'],
   ['Cabeçalho com marca', 'nv-cabecalho, nv-marca, nv-nav', 'sidebar/navbar da spartan', 'Portal do site-factory e telas de acesso'],
   ['Foco do teclado', ':focus-visible (--nv-foco)', 'outline-ring (tema.css)', 'Todos'],
 ];
@@ -57,6 +59,24 @@ function linhaCampos(modo) {
   ].map(([n, h]) => `<div class="estado"><span class="rot">${n}</span>${h}</div>`).join('');
 }
 
+const iconeBtn = (nome, rotulo, extra = '', tag = 'button') => {
+  const svg = `<svg class="nv-icone" aria-hidden="true" focusable="false"><use href="#nv-i-${nome}"/></svg>`;
+  return tag === 'a'
+    ? `<a class="nv-botao nv-botao--icone${extra}" href="#" aria-label="${rotulo}">${svg}</a>`
+    : `<button type="button" class="nv-botao nv-botao--icone${extra}" aria-label="${rotulo}">${svg}</button>`;
+};
+function acoesTabela() {
+  const grade = Object.keys(ICONES).map((n) => `<div class="amostra"><span class="icone-amostra"><svg class="nv-icone" aria-hidden="true" focusable="false"><use href="#nv-i-${n}"/></svg></span><code>${n}</code></div>`).join('');
+  const cel = (...x) => `<td class="nv-acoes-col"><div class="nv-acoes-tabela">${x.join('')}</div></td>`;
+  const linhas = `
+    <tr><td data-rotulo="Número">1042</td><td data-rotulo="Cliente">Padaria Modelo Ltda</td><td data-rotulo="Situação"><span class="nv-selo nv-selo--sucesso">Autorizada</span></td>${cel(iconeBtn('abrir', 'Abrir nota 1042', '', 'a'), iconeBtn('baixar', 'Baixar PDF da nota 1042', ' s-dica'), iconeBtn('estornar', 'Estornar nota 1042', ' nv-botao--perigo'))}</tr>
+    <tr><td data-rotulo="Número">1041</td><td data-rotulo="Cliente">Oficina Fictícia ME</td><td data-rotulo="Situação"><span class="nv-selo nv-selo--info">Em processamento</span></td>${cel(iconeBtn('abrir', 'Abrir nota 1041', '', 'a'), iconeBtn('cancelar', 'Cancelar nota 1041', ' nv-botao--perigo'))}</tr>
+    <tr><td data-rotulo="Número">1040</td><td data-rotulo="Cliente">Clínica de Exemplo</td><td data-rotulo="Situação"><span class="nv-selo nv-selo--perigo">Rejeitada</span></td>${cel(iconeBtn('reenviar', 'Reenviar nota 1040'), iconeBtn('editar', 'Corrigir nota 1040'), iconeBtn('mais', 'Mais opções da nota 1040'))}</tr>`;
+  return `<p class="nv-texto-suave">Sem texto visível: o nome vem de <code>aria-label</code> e a mesma frase aparece ao passar o mouse e ao focar pelo teclado (dica já aberta no segundo botão). Com a tela abaixo de 768&nbsp;px ou sem mouse, a frase fica escrita ao lado do ícone.</p>
+    <div class="amostras icones">${grade}</div>
+    <div class="nv-tabela-caixa"><table class="nv-tabela nv-tabela--cartoes"><thead><tr><th>Número</th><th>Cliente</th><th>Situação</th><th class="nv-acoes-col">Ações</th></tr></thead><tbody>${linhas}</tbody></table></div>`;
+}
+
 function painel(modo, tokens) {
   const t = tokens[modo];
   const cores = Object.entries(t).map(([k, v]) =>
@@ -68,6 +88,8 @@ function painel(modo, tokens) {
     <div class="amostras">${cores}</div>
     <h3>Botões e estados</h3>
     <div class="nv-tabela-caixa"><table class="nv-tabela"><thead><tr><th></th>${ESTADOS_BOTAO.map(([n]) => `<th>${n}</th>`).join('')}</tr></thead><tbody>${linhaBotoes()}</tbody></table></div>
+    <h3>Ações em tabela (ícones)</h3>
+    ${acoesTabela()}
     <h3>Campo e estados</h3>
     <div class="estados">${linhaCampos(modo)}</div>
     <h3>Selos e avisos</h3>
@@ -142,9 +164,12 @@ details{margin:12px 0}summary{cursor:pointer;font-weight:600}
 .nv-pagina .nv-entrada.s-carregando-campo{opacity:.7;cursor:progress}
 @keyframes giro{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.nv-pagina .nv-botao.s-carregando::before{animation:none}}
+.icones{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));margin-bottom:14px}.icone-amostra{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;color:var(--primary)}
+.nv-pagina .nv-botao--icone.s-dica::after{opacity:1;visibility:visible}
 </style></head><body>
+${spriteIcones()}
 <header class="topo"><h1>Referência visual NuvyTech</h1>
-<p>Gerada de <code>tokens.mjs</code> e <code>layout/layout.css</code> (nuvy-ui 1.4.1). Tudo abaixo é o CSS real do repositório; só os estados hover e foco são forçados para aparecerem lado a lado.</p></header>
+<p>Gerada de <code>tokens.mjs</code> e <code>layout/layout.css</code> (nuvy-ui 1.4.2). Tudo abaixo é o CSS real do repositório; só os estados hover e foco são forçados para aparecerem lado a lado.</p></header>
 <main class="corpo">
 ${painel('escuro', tokens)}
 ${painel('claro', tokens)}

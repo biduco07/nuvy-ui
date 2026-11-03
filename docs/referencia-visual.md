@@ -99,3 +99,6 @@ Os nomes `hlm*` são os da spartan 1.8; confira no `libs/ui` de cada projeto ant
 1. Cor, raio, fonte ou escala: edite `tokens.mjs`. Layout: `layout/layout.css`.
 2. `npm run gerar` (atualiza `dist/`, inclusive `dist/penpot/tokens.json`) e `npm test`.
 3. `npm run referencia` para ver o resultado; reimporte `dist/penpot/tokens.json` no Penpot ([penpot.md](penpot.md)).
+
+## Ações em tabela (1.4.2)
+A referência (`npm run referencia`) mostra os 12 ícones e uma tabela com a coluna "Ações", com a dica aberta em um dos botões. Detalhes de uso em [como-usar.md](como-usar.md#ações-em-tabela-coluna-ações-com-ícones).
