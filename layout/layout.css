@@ -20,8 +20,6 @@
   --nv-sombra: 0 1px 2px color-mix(in oklab, var(--background) 80%, transparent);
   --nv-foco: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
   --nv-controle: 44px;
-  --nv-controle-pequeno: 36px;
-  --nv-controle-grande: 50px;
   --nv-espaco: 20px;
   /* Escala de espaçamento (tokens.mjs > escalas.espacamento): padding e vão de controle usam estes degraus. */
   --nv-esp-1: 4px;
@@ -253,11 +251,19 @@
 .nv-pagina .nv-titulo-pagina h1 {
   margin: 0;
 }
+/* Grupo de ações: botões lado a lado, sempre com o mesmo vão. Só quebra se o texto não couber. */
 .nv-acoes {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: var(--nv-esp-3);
+}
+.nv-acoes > form {
+  display: flex;
+  margin: 0;
+}
+.nv-acoes > form > .nv-botao {
+  flex: 1 1 auto;
 }
 
 /* Cartão */
@@ -283,6 +289,31 @@
   background: var(--nv-atencao-fundo);
   border-color: var(--nv-atencao-linha);
   border-left: 4px solid var(--warning);
+}
+/* Cabeça do cartão: título à esquerda, ações à direita. */
+.nv-cartao__cabeca {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--nv-esp-3) var(--nv-esp-4);
+  margin: 0 0 var(--nv-esp-4);
+}
+.nv-pagina .nv-cartao__cabeca > :is(h1, h2, h3) {
+  margin: 0;
+}
+/* Sobretítulo, título, subtítulo e ações nunca colam um no outro. */
+.nv-cartao .nv-sobretitulo + :is(h1, h2, h3) {
+  margin-top: var(--nv-esp-1);
+}
+.nv-cartao :is(h1, h2, h3):has(+ .nv-texto-suave) {
+  margin-bottom: var(--nv-esp-2);
+}
+.nv-cartao :is(h1, h2, h3) + .nv-texto-suave {
+  margin: 0 0 var(--nv-esp-4);
+}
+.nv-cartao .nv-texto-suave + .nv-acoes {
+  margin-top: var(--nv-esp-4);
 }
 
 /* Grade de cartões e indicadores */
@@ -332,13 +363,16 @@
   color: var(--warning);
 }
 
-/* Botões: primário (cheio) para a ação principal, secundário (contorno) para o resto */
+/* Botões: primário (cheio) para a ação principal, secundário (contorno) para o resto.
+   Altura única (--nv-controle) em todas as variantes: pequeno e grande mudam só o texto e o recuo.
+   Vale também em <summary class="nv-botao">. */
 .nv-botao {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: var(--nv-esp-2);
   min-height: var(--nv-controle);
+  max-width: 100%;
   padding: var(--nv-esp-2) var(--nv-esp-5);
   font: inherit;
   font-size: 15px;
@@ -386,17 +420,30 @@
   filter: brightness(1.08);
 }
 .nv-botao--pequeno {
-  min-height: var(--nv-controle-pequeno);
-  padding: var(--nv-esp-1) var(--nv-esp-4);
+  padding: var(--nv-esp-2) var(--nv-esp-4);
   font-size: 14px;
 }
 .nv-botao--grande {
-  min-height: var(--nv-controle-grande);
-  padding: var(--nv-esp-3) var(--nv-esp-6);
+  padding: var(--nv-esp-2) var(--nv-esp-6);
   font-size: 17px;
 }
 .nv-botao--total {
   width: 100%;
+}
+summary.nv-botao {
+  width: fit-content;
+  list-style: none;
+}
+summary.nv-botao::-webkit-details-marker {
+  display: none;
+}
+/* Botões soltos, fora de um grupo com vão próprio, também não colam. */
+.nv-botao + .nv-botao {
+  margin-inline-start: var(--nv-esp-3);
+}
+.nv-acoes > .nv-botao,
+.nv-formulario__acoes > .nv-botao {
+  margin: 0;
 }
 /* Foco: o anel vale também nas variantes (que zeram box-shadow) e o canto do botão não encolhe. */
 .nv-pagina .nv-botao:focus-visible,
@@ -531,7 +578,7 @@
 .nv-formulario__acoes {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: var(--nv-esp-3);
   margin-top: 20px;
   grid-column: 1 / -1;
 }
@@ -791,8 +838,14 @@
   .nv-formulario--duas-colunas {
     display: block;
   }
-  .nv-formulario__acoes .nv-botao {
-    flex: 1 1 100%;
+  /* Dois botões dividem a linha e só quebram se a soma dos textos não couber. */
+  .nv-botao {
+    padding-inline: var(--nv-esp-4);
+  }
+  .nv-formulario__acoes .nv-botao,
+  .nv-acoes > :first-child:nth-last-child(2),
+  .nv-acoes > :last-child:nth-child(2) {
+    flex: 1 1 auto;
   }
   .nv-indicadores {
     grid-template-columns: repeat(2, minmax(0, 1fr));

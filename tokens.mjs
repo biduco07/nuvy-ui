@@ -98,7 +98,7 @@ export const forma = {
 export const escalas = {
   espacamento: { 1: '4px', 2: '8px', 3: '12px', 4: '16px', 5: '20px', 6: '24px', 8: '32px' },
   raios: { controle: '8px', cartao: '14px', pilula: '999px' }, // controle = radius × 0,8; cartão = radius × 1,4
-  tamanhos: { controle: '44px', 'controle-pequeno': '36px', 'controle-grande': '50px', conteudo: '1120px' },
+  tamanhos: { controle: '44px', conteudo: '1120px' },
   texto: {
     titulo: { size: '30px', weight: '700', line: '1.2' },
     subtitulo: { size: '20px', weight: '700', line: '1.3' },
