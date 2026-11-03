@@ -4,9 +4,10 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { rgbParaHex, rgbParaOklch } from './cor.mjs';
 import { comum, marcas, graficos, forma, escalas } from '../tokens.mjs';
+import { spriteIcones } from '../layout/icones.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.4.1';
+const VERSAO = '1.4.2';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {
@@ -200,6 +201,7 @@ export function gerarArquivos() {
   // Layout padrão (layout/layout.css): usa só variáveis do tema, então serve a qualquer marca.
   const layout = readFileSync(join(RAIZ, 'layout', 'layout.css'), 'utf8');
   for (const marca of Object.keys(marcas)) arquivos.set(`${marca}/layout.css`, cabecalhoLayout() + layout);
+  arquivos.set('nuvytech/icones.svg', spriteIcones());
   // Logo oficial (logo/*.svg): vale para qualquer marca do pacote, hoje só a NuvyTech.
   for (const nome of ['logo.svg', 'logo-escuro.svg', 'favicon.svg']) {
     arquivos.set(`nuvytech/${nome}`, readFileSync(join(RAIZ, 'logo', nome), 'utf8'));

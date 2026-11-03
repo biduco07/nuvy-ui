@@ -161,11 +161,41 @@ Arquivo: `dist/nuvytech/layout.css` (fonte em `layout/layout.css`). Exemplo comp
 | Coluna lateral | variante: `nv-pagina--lateral`, `nv-app`, `nv-lateral` (`__topo`, `__nav`, `__grupo`, `__lista`, `__sub`, `__link`, `__icone`, `__texto`, `__contagem`, `__conta`, `__botao`, `__fundo`), `nv-lateral-corpo`, `nv-barra-topo`. Detalhes em [layout-lateral.md](layout-lateral.md) |
 | Texto | `nv-titulo-pagina`, `nv-acoes`, `nv-cartao__cabeca`, `nv-sobretitulo`, `nv-texto-suave`, `nv-num`, `nv-codigo` |
 | Cartão e grade | `nv-cartao` (`--destaque`, `--atencao`), `nv-grade`, `nv-indicadores`, `nv-indicador` (`__valor`, `__nome`, `--atencao`) |
-| Botão | `nv-botao`, `nv-botao--secundario`, `--perigo`, `--pequeno`, `--grande`, `--total` |
+| Botão | `nv-botao`, `nv-botao--secundario`, `--perigo`, `--pequeno`, `--grande`, `--total`, `--icone` (só ícone, ver "Ações em tabela") |
 | Formulário | `nv-formulario` (`--duas-colunas`, `__acoes`), `nv-campo` (`--largo`), `nv-rotulo`, `nv-entrada` (`--invalida`, `--total`), `nv-selecao`, `nv-area-texto`, `nv-marcador`, `nv-ajuda`, `nv-erro-campo`, `nv-grupo`, `nv-filtros` |
-| Tabela | `nv-tabela-caixa`, `nv-tabela`, `nv-tabela__detalhe` |
+| Tabela | `nv-tabela-caixa`, `nv-tabela` (`--cartoes`), `nv-tabela__detalhe`, `nv-acoes-col`, `nv-acoes-tabela`, `nv-icone` |
 | Situação | `nv-selo` (`--sucesso`, `--atencao`, `--perigo`, `--info`, `--destaque`), `nv-aviso` (`--sucesso`, `--atencao`, `--erro`) |
 | Outros | `nv-lista`, `nv-vazio`, `nv-barra`, `nv-dados` |
+
+### Ações em tabela (coluna "Ações" com ícones)
+
+Em vez de botões grandes em cada linha, a última coluna se chama **Ações**, fica alinhada à direita e traz botões só de ícone (44 px, mesma altura de todos os botões). Funciona em `<a>`, `<button>` e `<summary>`.
+
+1. Cole **uma vez** no `<body>` o conteúdo de `dist/nuvytech/icones.svg` (sprite inline, sem fonte nem biblioteca; usa `currentColor`, então vale no claro e no escuro). Ícones: `abrir`, `editar`, `excluir`, `cancelar`, `baixar`, `enviar`, `reenviar`, `copiar`, `estornar`, `aprovar`, `recusar`, `mais`. Fonte em `layout/icones.mjs`.
+2. Monte a coluna:
+   ```html
+   <table class="nv-tabela nv-tabela--cartoes">
+     <thead><tr><th>Número</th><th>Cliente</th><th class="nv-acoes-col">Ações</th></tr></thead>
+     <tbody>
+       <tr>
+         <td data-rotulo="Número">1042</td>
+         <td data-rotulo="Cliente">Padaria Modelo Ltda</td>
+         <td class="nv-acoes-col"><div class="nv-acoes-tabela">
+           <a class="nv-botao nv-botao--icone" href="/notas/1042" aria-label="Abrir nota 1042">
+             <svg class="nv-icone" aria-hidden="true" focusable="false"><use href="#nv-i-abrir"/></svg></a>
+           <button type="button" class="nv-botao nv-botao--icone nv-botao--perigo" aria-label="Estornar nota 1042">
+             <svg class="nv-icone" aria-hidden="true" focusable="false"><use href="#nv-i-estornar"/></svg></button>
+         </div></td>
+       </tr>
+     </tbody>
+   </table>
+   ```
+3. Regras:
+   - `aria-label` é **obrigatório** e descreve a ação com o alvo ("Excluir rascunho 1038", não só "Excluir"). É o nome para o leitor de tela e o texto da dica. O `<svg>` leva `aria-hidden="true"`.
+   - **Dica** (só CSS): aparece à esquerda do ícone ao passar o mouse e ao focar pelo teclado. Fica na última coluna, então não é cortada pela caixa com rolagem (`nv-tabela-caixa`) nem sai da tela. Não fecha com Esc (isso exigiria JavaScript).
+   - **Perigo**: use `nv-botao--perigo` junto em ações que apagam, cancelam ou estornam.
+   - **Celular e telas sem mouse** (até 767 px, ou `hover: none`): não existe dica. A descrição passa a ficar **escrita ao lado do ícone**. Com `nv-tabela--cartoes` e `data-rotulo` em cada `<td>`, cada linha vira um cartão (rótulo e valor) com as ações no fim. Sem essa classe a tabela continua rolando na horizontal e as ações ficam empilhadas com a descrição visível.
+   - Ação que muda de estado (ex.: desabilitar): `disabled` ou `aria-disabled="true"`, como nos outros botões.
 
 **Regras**
 - O foco do teclado usa o contorno cheio com `--ring` (`:focus-visible`); não o remova.

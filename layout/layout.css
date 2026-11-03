@@ -42,11 +42,12 @@
 .nv-pagina *::after {
   box-sizing: border-box;
 }
-.nv-pagina a {
+/* Links de texto; <a class="nv-botao"> fica de fora para não perder a cor do próprio botão. */
+.nv-pagina a:where(:not(.nv-botao)) {
   color: var(--primary);
   text-underline-offset: 2px;
 }
-.nv-pagina a:hover {
+.nv-pagina a:where(:not(.nv-botao)):hover {
   color: var(--nv-primario-hover);
 }
 .nv-pagina [hidden] {
@@ -479,6 +480,111 @@ summary.nv-botao::-webkit-details-marker {
   filter: none;
 }
 
+/* Botão de ícone (nv-botao--icone): <a>, <button> ou <summary> sem texto visível, com um <svg class="nv-icone">.
+   O nome vem de aria-label (obrigatório) e a mesma frase aparece como dica ao passar o mouse e ao focar pelo
+   teclado, só com CSS. A altura é a de sempre (--nv-controle) e a largura também, então o alvo de toque é 44 px.
+   Sem mouse (celular, tablet) ou abaixo de 768 px não há dica: a frase fica escrita ao lado do ícone. */
+.nv-icone {
+  width: 20px;
+  height: 20px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.nv-botao--icone {
+  position: relative;
+  flex: none;
+  width: var(--nv-controle);
+  padding: 0;
+}
+.nv-pagina .nv-botao.nv-botao--icone {
+  color: var(--primary);
+  background: transparent;
+  border-color: transparent;
+  box-shadow: none;
+}
+.nv-pagina .nv-botao.nv-botao--icone:hover {
+  color: var(--primary);
+  background: var(--accent);
+  border-color: transparent;
+  filter: none;
+}
+.nv-pagina .nv-botao.nv-botao--icone.nv-botao--perigo {
+  color: var(--destructive);
+}
+.nv-pagina .nv-botao.nv-botao--icone.nv-botao--perigo:hover {
+  color: var(--destructive);
+  background: var(--nv-perigo-fundo);
+}
+.nv-pagina .nv-botao.nv-botao--icone:disabled:hover,
+.nv-pagina .nv-botao.nv-botao--icone[aria-disabled='true']:hover {
+  color: var(--primary);
+  background: transparent;
+  border-color: transparent;
+}
+.nv-pagina .nv-botao.nv-botao--icone.nv-botao--perigo:disabled:hover,
+.nv-pagina .nv-botao.nv-botao--icone.nv-botao--perigo[aria-disabled='true']:hover {
+  color: var(--destructive);
+  background: transparent;
+}
+/* A dica fica à esquerda do ícone, na altura dele: a coluna de ações é a última da tabela, então a dica nunca
+   sai pela direita nem pelo alto/baixo da caixa com rolagem, e não cobre a linha de cima. */
+.nv-botao--icone::after {
+  content: attr(aria-label);
+  content: attr(aria-label) / '';
+  position: absolute;
+  top: 50%;
+  right: calc(100% + var(--nv-esp-1));
+  z-index: 5;
+  width: max-content;
+  max-width: 260px;
+  padding: var(--nv-esp-1) var(--nv-esp-2);
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0;
+  text-align: left;
+  color: var(--background);
+  background: var(--foreground);
+  border-radius: var(--nv-raio-controle);
+  box-shadow: var(--nv-sombra);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: opacity 0.12s ease, visibility 0.12s;
+}
+.nv-botao--icone:hover::after,
+.nv-botao--icone:focus-visible::after {
+  opacity: 1;
+  visibility: visible;
+}
+@media (max-width: 767px), (hover: none) {
+  .nv-botao--icone {
+    width: auto;
+    padding: var(--nv-esp-2) var(--nv-esp-3);
+    justify-content: flex-start;
+  }
+  .nv-botao--icone::after {
+    position: static;
+    width: auto;
+    max-width: none;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: inherit;
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+}
+
 /* Formulários */
 .nv-formulario {
   margin: 0;
@@ -638,6 +744,38 @@ summary.nv-botao::-webkit-details-marker {
   color: var(--muted-foreground);
 }
 
+/* Coluna de ações: última coluna, título "Ações", alinhada à direita; os ícones ficam numa linha só
+   (nv-acoes-tabela) e, sem mouse ou abaixo de 768 px, empilham com a descrição escrita ao lado. */
+.nv-tabela .nv-acoes-col {
+  width: 1%;
+  text-align: right;
+  white-space: nowrap;
+}
+.nv-tabela td.nv-acoes-col {
+  padding-block: var(--nv-esp-2);
+  vertical-align: middle;
+}
+.nv-acoes-tabela {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--nv-esp-1);
+}
+.nv-acoes-tabela > form {
+  display: flex;
+  margin: 0;
+}
+@media (max-width: 767px), (hover: none) {
+  .nv-tabela .nv-acoes-col {
+    text-align: left;
+    white-space: normal;
+  }
+  .nv-acoes-tabela {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 /* Selos de situação */
 .nv-selo {
   display: inline-block;
@@ -651,6 +789,63 @@ summary.nv-botao::-webkit-details-marker {
   background: var(--secondary);
   border: 1px solid var(--border);
   border-radius: 999px;
+}
+
+/* Tabela em cartões no celular (opcional): <table class="nv-tabela nv-tabela--cartoes"> com data-rotulo em cada <td>.
+   Abaixo de 768 px cada linha vira um cartão (rótulo + valor) e as ações ficam no fim, com a descrição escrita. */
+@media (max-width: 767px) {
+  .nv-tabela--cartoes thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .nv-tabela--cartoes,
+  .nv-tabela--cartoes tbody,
+  .nv-tabela--cartoes tr,
+  .nv-tabela--cartoes td {
+    display: block;
+    width: 100%;
+  }
+  .nv-tabela--cartoes tr {
+    padding: var(--nv-esp-2) 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .nv-tabela--cartoes tbody tr:last-child {
+    border-bottom: 0;
+  }
+  .nv-tabela--cartoes td {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--nv-esp-1) var(--nv-esp-4);
+    padding: var(--nv-esp-1) var(--nv-esp-4);
+    text-align: right;
+    border-bottom: 0;
+  }
+  .nv-tabela--cartoes td[data-rotulo]::before {
+    content: attr(data-rotulo);
+    font-size: 12px;
+    font-weight: 650;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--muted-foreground);
+  }
+  .nv-tabela--cartoes td.nv-acoes-col {
+    display: block;
+    width: 100%;
+    padding-block: var(--nv-esp-2) var(--nv-esp-1);
+    text-align: left;
+  }
+  .nv-tabela--cartoes .nv-acoes-tabela {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+  }
 }
 .nv-selo--sucesso {
   color: var(--success);
