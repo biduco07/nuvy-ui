@@ -45,9 +45,9 @@ Números em tabelas usam `nv-num` (algarismos tabulares). Código usa `font-mono
 
 ## Espaçamento, raios e tamanhos
 
-- **Espaçamento:** 4, 8, 12, 16, 20, 24, 32 px (`escalas.espacamento`), expostos no layout como `--nv-esp-1` a `--nv-esp-8`. Padding de botão, campo, selo, célula e cartão usam só esses degraus; alturas por `--nv-controle` (44), `--nv-controle-pequeno` (36) e `--nv-controle-grande` (50). O teste `espacamento.test.mjs` impede px solto nesses paddings.
+- **Espaçamento:** 4, 8, 12, 16, 20, 24, 32 px (`escalas.espacamento`), expostos no layout como `--nv-esp-1` a `--nv-esp-8`. Padding de botão, campo, selo, célula e cartão usam só esses degraus; altura única por `--nv-controle` (44); vão de 12 px entre botões (`nv-acoes`). Grupo de dois botões fica lado a lado e só quebra se os textos não couberem. O teste `espacamento.test.mjs` impede px solto nesses paddings.
 - **Raios:** controle 8 px (`--radius` × 0,8), cartão e janela 14 px (× 1,4), selo em pílula, foco 4 px.
-- **Tamanhos:** controle 44 px (pequeno 36, grande 50), conteúdo até 1120 px. Abaixo de 720 px a navegação quebra e as tabelas rolam na horizontal.
+- **Tamanhos:** controle 44 px em todos os botões (pequeno e grande mudam só texto e recuo), conteúdo até 1120 px. Abaixo de 720 px a navegação quebra e as tabelas rolam na horizontal.
 
 ## Componentes e estados
 

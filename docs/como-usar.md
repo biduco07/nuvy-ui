@@ -159,7 +159,7 @@ Arquivo: `dist/nuvytech/layout.css` (fonte em `layout/layout.css`). Exemplo comp
 | Página | `nv-pagina` (no `<body>`), `nv-pagina--estreita` (telas de acesso), `nv-pagina--leitura`, `nv-principal`, `nv-pular`, `nv-rodape` |
 | Cabeçalho | `nv-cabecalho`, `nv-cabecalho__interno`, `nv-marca` (`__logo`, `__sub`), `nv-nav`, `nv-nav__link` (`aria-current="page"` marca a atual), `nv-conta` (`__nome`, `__papel`) |
 | Coluna lateral | variante: `nv-pagina--lateral`, `nv-app`, `nv-lateral` (`__topo`, `__nav`, `__grupo`, `__lista`, `__sub`, `__link`, `__icone`, `__texto`, `__contagem`, `__conta`, `__botao`, `__fundo`), `nv-lateral-corpo`, `nv-barra-topo`. Detalhes em [layout-lateral.md](layout-lateral.md) |
-| Texto | `nv-titulo-pagina`, `nv-acoes`, `nv-sobretitulo`, `nv-texto-suave`, `nv-num`, `nv-codigo` |
+| Texto | `nv-titulo-pagina`, `nv-acoes`, `nv-cartao__cabeca`, `nv-sobretitulo`, `nv-texto-suave`, `nv-num`, `nv-codigo` |
 | Cartão e grade | `nv-cartao` (`--destaque`, `--atencao`), `nv-grade`, `nv-indicadores`, `nv-indicador` (`__valor`, `__nome`, `--atencao`) |
 | Botão | `nv-botao`, `nv-botao--secundario`, `--perigo`, `--pequeno`, `--grande`, `--total` |
 | Formulário | `nv-formulario` (`--duas-colunas`, `__acoes`), `nv-campo` (`--largo`), `nv-rotulo`, `nv-entrada` (`--invalida`, `--total`), `nv-selecao`, `nv-area-texto`, `nv-marcador`, `nv-ajuda`, `nv-erro-campo`, `nv-grupo`, `nv-filtros` |
