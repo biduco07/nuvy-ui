@@ -27,29 +27,31 @@ export const comum = {
     info: [0.47, 0.11, 218],
     'info-foreground': [0.985, 0.002, 247.839],
   },
+  // Escuro mais claro (1.5.0, aprovado pelo Pedro em 04/11/2026, D-264 do portal): fundo, cartões,
+  // coluna e bordas um ou dois degraus acima e texto secundário mais claro. O primário não muda.
   escuro: {
-    background: [0.15, 0.05, 262],
+    background: [0.22, 0.05, 260], // #0c1a32
     foreground: [0.984, 0.003, 247.858],
-    card: [0.205, 0.05, 262],
+    card: [0.27, 0.05, 260], // #18263f
     'card-foreground': [0.984, 0.003, 247.858],
-    popover: [0.205, 0.05, 262],
+    popover: [0.27, 0.05, 260],
     'popover-foreground': [0.984, 0.003, 247.858],
-    secondary: [0.275, 0.05, 260],
+    secondary: [0.33, 0.05, 259], // #25364f
     'secondary-foreground': [0.984, 0.003, 247.858],
-    muted: [0.275, 0.05, 260],
-    'muted-foreground': [0.8, 0.045, 257],
-    destructive: [0.79, 0.13, 22],
+    muted: [0.33, 0.05, 259],
+    'muted-foreground': [0.85, 0.04, 257], // #becfe8
+    destructive: [0.86, 0.13, 22], // 1.5.0: AA do selo sobre o cartão mais claro
     'destructive-foreground': [0.2, 0.06, 20],
-    border: 'oklch(1 0 0 / 10%)',
-    input: [0.6, 0.05, 257],
-    sidebar: [0.205, 0.05, 262],
+    border: 'oklch(1 0 0 / 16%)',
+    input: [0.63, 0.05, 257], // 0.63 (não 0.66): placeholder do select com o mouse no AA
+    sidebar: [0.25, 0.05, 260], // #132139
     'sidebar-foreground': [0.984, 0.003, 247.858],
-    'sidebar-border': 'oklch(1 0 0 / 10%)',
-    success: [0.79, 0.16, 160],
+    'sidebar-border': 'oklch(1 0 0 / 16%)',
+    success: [0.83, 0.16, 160],
     'success-foreground': [0.2, 0.05, 155],
     warning: [0.84, 0.15, 80],
     'warning-foreground': [0.25, 0.06, 60],
-    info: [0.78, 0.12, 218],
+    info: [0.85, 0.12, 218],
     'info-foreground': [0.22, 0.05, 235],
   },
 };
@@ -73,7 +75,7 @@ export const marcas = {
     escuro: {
       primary: [0.72, 0.15, 250],
       'primary-foreground': [0.2, 0.06, 262],
-      accent: [0.31, 0.08, 258],
+      accent: [0.35, 0.08, 258], // #1e3a64
       'accent-foreground': [0.93, 0.03, 257],
       ring: [0.66, 0.17, 255],
       'chart-1': [0.66, 0.17, 255],

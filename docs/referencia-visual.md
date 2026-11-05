@@ -102,3 +102,8 @@ Os nomes `hlm*` são os da spartan 1.8; confira no `libs/ui` de cada projeto ant
 
 ## Ações em tabela (1.4.2)
 A referência (`npm run referencia`) mostra os 12 ícones e uma tabela com a coluna "Ações", com a dica aberta em um dos botões. Detalhes de uso em [como-usar.md](como-usar.md#ações-em-tabela-coluna-ações-com-ícones).
+
+## Escuro mais claro (1.5.0)
+Aprovado pelo Pedro em 04/11/2026 (testado antes no portal, D-264). O escuro subiu um ou dois degraus: fundo `#0c1a32`, cartão e popover `#18263f`, coluna `#132139`, muted e secondary `#25364f`, accent `#1e3a64`, texto secundário `#becfe8` e bordas a 16%. O primário `#52a9fe` não mudou.
+
+Para manter o AA sobre o cartão mais claro, os selos de status clarearam (perigo `#ffbebb`, sucesso `#50e7a3`, informação `#6ce0ff`) e a borda do campo ficou em `#768ba8`.
