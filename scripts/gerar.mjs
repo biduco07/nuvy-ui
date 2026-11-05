@@ -7,7 +7,7 @@ import { comum, marcas, graficos, forma, escalas } from '../tokens.mjs';
 import { spriteIcones } from '../layout/icones.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.4.2';
+const VERSAO = '1.5.0';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {

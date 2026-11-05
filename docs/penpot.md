@@ -24,7 +24,7 @@ A NuvyTech tem poucos editores, então a nuvem grátis basta. Auto-hospedar só 
 
 Sim. O Penpot tem tokens de design nativos (aba **Tokens**) e importa JSON com `$value`, `$type` e `$description` ([guia do formato](https://penpot.app/blog/a-practical-guide-to-the-design-tokens-json-format/), [ajuda](https://help.penpot.app/user-guide/design-tokens/)). O que pesou:
 
-- **Cores só em hex, rgb ou hsl; oklch não aparece na documentação.** O arquivo usa o hex já calculado em `dist/tokens.json`. A borda do escuro (branco a 10%) vai como `rgba(255, 255, 255, 0.1)`.
+- **Cores só em hex, rgb ou hsl; oklch não aparece na documentação.** O arquivo usa o hex já calculado em `dist/tokens.json`. A borda do escuro (branco a 16%) vai como `rgba(255, 255, 255, 0.16)`.
 - A exportação do Penpot segue o formato do Tokens Studio, não o DTCG 2025.10 ([relato no fórum](https://community.penpot.app/t/token-export-is-tokens-studio-format-not-dtcg-2025-10/10544), análise de um usuário). Por isso os tipos usam os nomes do Tokens Studio (`color`, `spacing`, `borderRadius`, `sizing`, `fontFamilies`, `fontSizes`, `fontWeights`) e os valores vão como texto.
 - Tamanho de fonte só em px por enquanto.
 - A API de tokens para plugins ainda não existe; não há sincronização automática, só reimportar.
