@@ -17,5 +17,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      # O node --test abre um processo por núcleo; no PC do Pedro isso pesa no limite de memória do WSL.
       - name: Contraste, dist em dia, cópia e modo escuro
+        if: runner.environment == 'github-hosted'
         run: npm test
+      - name: Contraste, dist em dia, cópia e modo escuro (concorrência limitada)
+        if: runner.environment != 'github-hosted'
+        run: npm test -- --test-concurrency=2
