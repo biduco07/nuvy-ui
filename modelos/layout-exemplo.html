@@ -174,6 +174,49 @@
       </div>
     </section>
 
+    <section class="nv-cartao">
+      <h2>Transições</h2>
+      <div aria-busy="true" aria-label="Carregando resumo">
+        <span class="nv-esqueleto nv-esqueleto--titulo" aria-hidden="true"></span>
+        <span class="nv-esqueleto nv-esqueleto--linha" aria-hidden="true"></span>
+        <span class="nv-esqueleto nv-esqueleto--linha nv-esqueleto--curto" aria-hidden="true"></span>
+      </div>
+      <div class="nv-acoes">
+        <details class="nv-menu-suspenso">
+          <summary class="nv-botao nv-botao--secundario">Mais ações</summary>
+          <ul class="nv-menu-suspenso__lista">
+            <li><a href="#">Duplicar nota</a></li>
+            <li><a href="#">Baixar PDF</a></li>
+          </ul>
+        </details>
+        <button class="nv-botao" type="button" onclick="document.getElementById('m-exemplo').showModal()">Abrir modal</button>
+        <button class="nv-botao nv-botao--secundario" type="button" onclick="mostrarAviso()">Mostrar aviso</button>
+      </div>
+      <dialog class="nv-modal" id="m-exemplo" aria-labelledby="m-titulo">
+        <h2 id="m-titulo">Cancelar a nota 1042?</h2>
+        <p>Esta ação avisa a prefeitura.</p>
+        <form method="dialog" class="nv-acoes">
+          <button class="nv-botao nv-botao--secundario" value="nao">Voltar</button>
+          <button class="nv-botao" value="sim">Cancelar nota</button>
+        </form>
+      </dialog>
+      <div class="nv-avisos" id="avisos" role="region" aria-label="Avisos"></div>
+    </section>
+    <script>
+      function mostrarAviso() {
+        const a = document.createElement('div');
+        a.className = 'nv-aviso nv-aviso--sucesso';
+        a.setAttribute('role', 'status');
+        a.textContent = 'Nota 1042 enviada.';
+        document.getElementById('avisos').append(a);
+        setTimeout(() => {
+          a.dataset.saindo = '';
+          a.addEventListener('transitionend', () => a.remove(), { once: true });
+          setTimeout(() => a.remove(), 400);
+        }, 3000);
+      }
+    </script>
+
     <footer class="nv-rodape">Dados fictícios, só para demonstrar o layout. Código em <span class="nv-codigo">nuvy-ui</span>.</footer>
   </main>
 </body>

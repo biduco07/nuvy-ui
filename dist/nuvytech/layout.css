@@ -1,4 +1,4 @@
-/* nuvy-ui 1.6.0 — layout padrão NuvyTech (classes nv-). Arquivo gerado: não edite aqui.
+/* nuvy-ui 1.7.0 — layout padrão NuvyTech (classes nv-). Arquivo gerado: não edite aqui.
    Para mudar, edite layout/layout.css no nuvy-ui, rode "npm run gerar" e copie de novo.
    Use junto com tokens-escuro.css (páginas sem JavaScript) ou tokens.css. */
 
@@ -25,6 +25,10 @@
   --nv-foco: 0 0 0 2px var(--background), 0 0 0 4px var(--ring);
   --nv-controle: 44px;
   --nv-espaco: 20px;
+  /* Movimento: 150-250 ms, só opacity e transform; desliga em prefers-reduced-motion (fim do arquivo). */
+  --nv-mov-rapido: 150ms;
+  --nv-mov: 200ms;
+  --nv-mov-curva: cubic-bezier(0.2, 0, 0, 1);
   /* Escala de espaçamento (tokens.mjs > escalas.espacamento): padding e vão de controle usam estes degraus. */
   --nv-esp-1: 4px;
   --nv-esp-2: 8px;
@@ -1059,6 +1063,213 @@ summary.nv-botao::-webkit-details-marker {
   .nv-tabela th,
   .nv-tabela td {
     padding: var(--nv-esp-3);
+  }
+}
+
+/* Transições sutis (só opacity e transform): esqueleto de carregamento, modal, aviso flutuante e menu suspenso.
+   Sem JavaScript tudo continua funcionando: o movimento é só um acabamento. */
+
+/* Esqueleto: marque o bloco que carrega com aria-busy="true" e cada peça com aria-hidden="true".
+   Ao terminar, troque pelo conteúdo e tire o aria-busy. O brilho é um degradê que desliza (transform). */
+.nv-esqueleto {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  width: 100%;
+  min-height: 1em;
+  background: var(--muted);
+  border-radius: var(--nv-raio-controle);
+}
+.nv-esqueleto::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--foreground) 9%, transparent), transparent);
+  transform: translateX(-120%);
+  animation: nv-brilho 1.4s ease-in-out infinite;
+}
+.nv-esqueleto--linha {
+  height: 14px;
+  margin: var(--nv-esp-2) 0;
+}
+.nv-esqueleto--titulo {
+  width: 60%;
+  height: 24px;
+  margin: var(--nv-esp-1) 0 var(--nv-esp-3);
+}
+.nv-esqueleto--curto {
+  width: 40%;
+}
+.nv-esqueleto--bloco {
+  height: 96px;
+  border-radius: var(--nv-raio-cartao);
+}
+.nv-esqueleto--circulo {
+  width: var(--nv-controle);
+  height: var(--nv-controle);
+  border-radius: 999px;
+}
+@keyframes nv-brilho {
+  to {
+    transform: translateX(120%);
+  }
+}
+
+/* Modal: <dialog class="nv-modal"> aberto com showModal(). Entra com fade + leve subida e sai do mesmo jeito
+   (display e overlay em transição discreta; navegador sem suporte só abre e fecha, sem movimento). */
+.nv-modal {
+  width: min(92vw, 480px);
+  max-height: 86vh;
+  margin: auto;
+  padding: var(--nv-esp-6);
+  color: var(--card-foreground);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--nv-raio-cartao);
+  box-shadow: var(--nv-sombra);
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+  transition:
+    opacity var(--nv-mov) var(--nv-mov-curva),
+    transform var(--nv-mov) var(--nv-mov-curva),
+    overlay var(--nv-mov) allow-discrete,
+    display var(--nv-mov) allow-discrete;
+}
+.nv-modal[open] {
+  opacity: 1;
+  transform: none;
+}
+.nv-modal::backdrop {
+  background: color-mix(in oklab, var(--background) 70%, transparent);
+  opacity: 0;
+  transition:
+    opacity var(--nv-mov) var(--nv-mov-curva),
+    overlay var(--nv-mov) allow-discrete,
+    display var(--nv-mov) allow-discrete;
+}
+.nv-modal[open]::backdrop {
+  opacity: 1;
+}
+@starting-style {
+  .nv-modal[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+  .nv-modal[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* Aviso flutuante (toast): ponha os .nv-aviso dentro de <div class="nv-avisos" role="region" aria-label="Avisos">.
+   Entra sozinho; para sair, ponha data-saindo no aviso e remova-o ao fim da transição (transitionend). */
+.nv-avisos {
+  position: fixed;
+  right: var(--nv-esp-4);
+  bottom: var(--nv-esp-4);
+  z-index: 30;
+  display: grid;
+  gap: var(--nv-esp-2);
+  width: min(92vw, 360px);
+}
+.nv-avisos .nv-aviso {
+  margin: 0;
+  box-shadow: var(--nv-sombra);
+  animation: nv-aviso-entra var(--nv-mov) var(--nv-mov-curva) both;
+  transition: opacity var(--nv-mov-rapido) ease, transform var(--nv-mov-rapido) ease;
+}
+.nv-avisos .nv-aviso[data-saindo] {
+  opacity: 0;
+  transform: translateY(8px);
+}
+@keyframes nv-aviso-entra {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+/* Menu suspenso: <details class="nv-menu-suspenso"> com <summary> e <ul class="nv-menu-suspenso__lista">.
+   A lista aparece com fade + leve descida a partir do botão. */
+.nv-menu-suspenso {
+  position: relative;
+  display: inline-block;
+}
+.nv-menu-suspenso > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.nv-menu-suspenso > summary::-webkit-details-marker {
+  display: none;
+}
+.nv-menu-suspenso__lista {
+  position: absolute;
+  top: calc(100% + var(--nv-esp-1));
+  left: 0;
+  z-index: 15;
+  min-width: 200px;
+  margin: 0;
+  padding: var(--nv-esp-1);
+  list-style: none;
+  color: var(--popover-foreground);
+  background: var(--popover);
+  border: 1px solid var(--border);
+  border-radius: var(--nv-raio-controle);
+  box-shadow: var(--nv-sombra);
+  transform-origin: top left;
+}
+.nv-menu-suspenso[open] > .nv-menu-suspenso__lista {
+  animation: nv-menu-abre var(--nv-mov-rapido) var(--nv-mov-curva) both;
+}
+.nv-pagina .nv-menu-suspenso__lista a {
+  display: block;
+  padding: var(--nv-esp-2) var(--nv-esp-3);
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--nv-raio-controle);
+}
+.nv-pagina .nv-menu-suspenso__lista a:hover {
+  color: var(--accent-foreground);
+  background: var(--accent);
+}
+@keyframes nv-menu-abre {
+  from {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+@keyframes nv-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+/* Movimento reduzido: esqueleto parado (sem brilho); modal, aviso e menu só com um fade curto, sem deslocar nem escalar. */
+@media (prefers-reduced-motion: reduce) {
+  .nv-esqueleto::after {
+    display: none;
+    animation: none;
+  }
+  .nv-modal,
+  .nv-modal[open] {
+    transform: none;
+    transition-duration: 80ms;
+  }
+  .nv-avisos .nv-aviso {
+    animation-name: nv-fade;
+    animation-duration: 80ms;
+    transition-duration: 80ms;
+  }
+  .nv-avisos .nv-aviso[data-saindo] {
+    transform: none;
+  }
+  .nv-menu-suspenso[open] > .nv-menu-suspenso__lista {
+    animation-name: nv-fade;
+    animation-duration: 80ms;
+  }
+  @starting-style {
+    .nv-modal[open] {
+      transform: none;
+    }
   }
 }
 
