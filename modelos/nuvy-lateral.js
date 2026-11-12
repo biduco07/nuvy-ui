@@ -59,6 +59,13 @@
   todos('[data-nv-fechar]').forEach(function (b) {
     b.addEventListener('click', function () { gaveta(false); voltarAoBotao(); });
   });
+  // App de uma página só (links #tela, sem recarregar): escolher um item fecha a gaveta. O foco fica
+  // com o app, que leva o foco ao título da tela nova.
+  todos('.nv-lateral__link').forEach(function (a) {
+    a.addEventListener('click', function () {
+      if (pagina.hasAttribute('data-lateral-aberta')) gaveta(false);
+    });
+  });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && pagina.hasAttribute('data-lateral-aberta')) {
       gaveta(false);

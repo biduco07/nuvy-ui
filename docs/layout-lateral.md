@@ -2,6 +2,8 @@
 
 Variante do layout padrão `nv-` em que a navegação sai do topo e vira uma coluna à esquerda. **O cabeçalho no topo continua sendo o padrão**; a coluna só vale quando o `<body>` leva `nv-pagina--lateral`. Primeiro uso previsto: o portal do site-factory (HTML gerado no servidor, sem Angular).
 
+**Quando usar:** a área logada de um app com várias telas (portal, nuvy-finanças e os próximos) usa a coluna lateral, nunca abas no topo. O cabeçalho no topo fica para páginas soltas e telas de entrada. App de uma página só (links `#tela`) também serve: escolher um item fecha a gaveta do celular, e o app só marca `aria-current="page"` no link da tela aberta.
+
 Ver: `previa/layout-lateral.html` (papéis e modos pela URL), `modelos/layout-lateral-exemplo.html` (HTML estático para copiar) e `modelos/nuvy-lateral.js` (JavaScript opcional, sem dependências).
 
 | Desktop | Recolhida | Celular (gaveta aberta) |
