@@ -7,7 +7,7 @@ import { comum, marcas, graficos, forma, escalas } from '../tokens.mjs';
 import { spriteIcones } from '../layout/icones.mjs';
 import { rgb, resolver, pares, HOVER } from './verificar.mjs';
 
-const VERSAO = '1.7.0';
+const VERSAO = '1.8.0';
 export const RAIZ = join(dirname(fileURLToPath(import.meta.url)), '..');
 const r3 = (n) => Number(n.toFixed(3));
 export function css(v) {
@@ -189,6 +189,16 @@ export function jsonPenpot() {
   };
 }
 
+export const FAVICONS_BINARIOS = ['favicon.ico', 'favicon-16x16.png', 'favicon-32x32.png', 'apple-touch-icon.png'];
+// Trecho do <head> com os arquivos na raiz do site (copiados por "npm run copiar-favicon").
+export const FAVICON_HTML = `<!-- Favicon padrão NuvyTech (nuvy-ui ${VERSAO}) -->
+<link rel="icon" href="/favicon.ico" sizes="48x48" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32x32.png" type="image/png" sizes="32x32" />
+<link rel="icon" href="/favicon-16x16.png" type="image/png" sizes="16x16" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+`;
+
 // Todos os arquivos de dist/: caminho relativo -> conteúdo.
 export function gerarArquivos() {
   const arquivos = new Map();
@@ -206,6 +216,10 @@ export function gerarArquivos() {
   for (const nome of ['logo.svg', 'logo-escuro.svg', 'favicon.svg']) {
     arquivos.set(`nuvytech/${nome}`, readFileSync(join(RAIZ, 'logo', nome), 'utf8'));
   }
+  // Favicon padrão de todo projeto NuvyTech (ICO, PNG 16/32 e o de 180 px do iPhone): binários, gerados
+  // de logo/favicon.svg por "npm run favicon".
+  for (const nome of FAVICONS_BINARIOS) arquivos.set(`nuvytech/${nome}`, readFileSync(join(RAIZ, 'logo', nome)));
+  arquivos.set('nuvytech/favicon.html', FAVICON_HTML);
   arquivos.set('penpot/tokens.json', JSON.stringify(jsonPenpot(), null, 2) + '\n');
   arquivos.set('tokens.json', JSON.stringify(jsonTokens(), null, 2) + '\n');
   return arquivos;
