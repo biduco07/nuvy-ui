@@ -120,6 +120,17 @@ test('nuvy-lateral.js: gaveta abre com foco no botão fechar e fecha com Esc dev
   assert.equal(a.abrir.focado, true);
 });
 
+test('nuvy-lateral.js: escolher um item com a gaveta aberta fecha a gaveta (app de uma página só)', () => {
+  const a = montar(null);
+  a.link.ouvintes.click[0]();
+  assert.equal(a.pagina.hasAttribute('data-lateral-aberta'), false);
+  a.abrir.ouvintes.click[0]();
+  assert.ok(a.pagina.hasAttribute('data-lateral-aberta'));
+  a.link.ouvintes.click[0]();
+  assert.equal(a.pagina.hasAttribute('data-lateral-aberta'), false);
+  assert.equal(a.abrir.getAttribute('aria-expanded'), 'false');
+});
+
 test('nuvy-lateral.js: sem localStorage não quebra', () => {
   const codigo = lerArq('modelos/nuvy-lateral.js');
   const el = { setAttribute() {}, removeAttribute() {}, hasAttribute: () => false, addEventListener() {}, querySelector: () => null };
