@@ -20,7 +20,7 @@ test('copia o tema para src/styles/nuvy-tema.css de um projeto novo', () => {
   assert.equal(r.destino, join(pasta, 'src', 'styles', 'nuvy-tema.css'));
   assert.equal(readFileSync(r.destino, 'utf8'), tema);
   assert.equal(r.versaoAntiga, null);
-  assert.equal(r.versaoNova, '1.7.0');
+  assert.equal(r.versaoNova, '1.8.0');
 });
 
 test('ao copiar por cima, informa a versão que estava lá', () => {
@@ -59,4 +59,14 @@ test('não avisa quando o styles.css só importa o tema', () => {
   mkdirSync(join(pasta, 'src'), { recursive: true });
   writeFileSync(join(pasta, 'src', 'styles.css'), "@import './styles/nuvy-tema.css';\n");
   assert.deepEqual(copiar(pasta).avisos, []);
+});
+
+test('copia o favicon padrão para a pasta pública, igual ao dist', async () => {
+  const { copiarFavicon, ARQUIVOS_FAVICON } = await import('../scripts/copiar-favicon.mjs');
+  const pasta = join(projeto(), 'public');
+  const copiados = copiarFavicon(pasta);
+  assert.equal(copiados.length, ARQUIVOS_FAVICON.length);
+  for (const nome of ARQUIVOS_FAVICON) {
+    assert.ok(readFileSync(join(pasta, nome)).equals(readFileSync(join(raiz, 'dist/nuvytech', nome))), nome);
+  }
 });

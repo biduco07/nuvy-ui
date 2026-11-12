@@ -44,6 +44,9 @@ A logo oficial da NuvyTech (a mesma do site nuvytech.com.br) fica em `logo/` e �
 | `logo.svg` | fundo claro (texto escuro) |
 | `logo-escuro.svg` | fundo escuro (texto claro); **os apps são tema escuro, use este** |
 | `favicon.svg` | ícone da aba do navegador |
+| `favicon.ico`, `favicon-16x16.png`, `favicon-32x32.png` | o mesmo ícone em ICO e PNG, para navegadores antigos e o `/favicon.ico` que todo navegador pede |
+| `apple-touch-icon.png` | 180 px, fundo branco, para a tela inicial do iPhone |
+| `favicon.html` | o trecho do `<head>` com todos os acima |
 
 Num app, o caminho no pacote é `nuvy-ui/dist/nuvytech/logo-escuro.svg`. Copie o arquivo para os assets do app (ou aponte o build para essa pasta) e use:
 
@@ -52,4 +55,14 @@ Num app, o caminho no pacote é `nuvy-ui/dist/nuvytech/logo-escuro.svg`. Copie o
 <link rel="icon" type="image/svg+xml" href="assets/nuvytech/favicon.svg" />
 ```
 
-Para trocar a logo, edite os arquivos de `logo/` e rode `npm run gerar`; `npm test` falha se o `dist/` ficar desatualizado.
+### Favicon padrão (todo projeto)
+
+Todo site e app da NuvyTech usa o ícone da NuvyTech na aba, inclusive jogos e sites de exemplo; site de cliente usa enquanto o cliente não tiver logo própria. Para colocar num projeto:
+
+```bash
+npm run copiar-favicon -- ../caminho/do/projeto/public
+```
+
+O comando grava os cinco arquivos na pasta pública (a que vira a raiz do site). Depois cole no `<head>` o conteúdo de `dist/nuvytech/favicon.html`. Se a pasta pública não for a raiz do site, ajuste os `href`.
+
+Para trocar a logo, edite os arquivos de `logo/` e rode `npm run gerar` (se mudar o `favicon.svg`, rode antes `npm run favicon`, que precisa do sharp: veja o topo de `scripts/favicon.mjs`); `npm test` falha se o `dist/` ficar desatualizado.
